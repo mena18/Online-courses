@@ -111,10 +111,16 @@ class course extends Controller{
 	}
 
 	// delelte this course frorm the database
-	public function deletefromDatabase($id){
+	public function delete($id){
 		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){$this->redirect("user/loginview");}
-		$v1 = $_SESSION['user']['id'];
-		course_model::deletefromDatabasee($v1,$id);
+
+		$course = course_model::get($id);
+		if($course['instructor_id']!=$_SESSION['user']['id']){
+			echo "you aren't the instructor who created the course";
+			return ;
+		}
+
+		course_model::delete($id);
 		$this->redirect("profile/index");
 	}
 
