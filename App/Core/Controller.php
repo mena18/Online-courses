@@ -14,5 +14,6 @@ class Controller {
 
   function redirect($path){
     header("Location: http://localhost/courses/".$path);
+    exit();
   }
 }

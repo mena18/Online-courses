@@ -29,7 +29,7 @@ foreach ($data['courses'] as $course ) {
 	    <p><?= $course['description'] ?><p>
 	    	<a href="/courses/course/deletefromDatabase/ <?= $course['id'] ?> " class="btn btn-danger" role="button">Delete From Database</a>
         <br><br>
-        <a href="/courses/course/modifyCourse/<?= $course['id'] ?>"class="btn btn-warning btn-lg" role="button">Modify course</a>
+        <a href="/courses/course/edit/<?=$course['id']?>"class="btn btn-warning btn-lg" role="button">Modify course</a>
         <br><br>
         <a href="/courses/lesson/create/<?= $course['id'] ?>" class="btn btn-info btn-lg">Add lessons</a>
        </p>

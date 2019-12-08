@@ -7,7 +7,7 @@ require_once("App/views/header.php");
 
 ?>
 
-
+<div class="container">
 <h1 > My Courses</h1>
 <div class='row'>
 
@@ -19,14 +19,14 @@ foreach ($data['courses'] as $course ) {
 	  <div class="caption">
 	   <h3><?= $course['name'] ?></h3>
 	    <p><?= $course['description'] ?><p>
-	    	<a href="/courses/course/delete/ <?= $course['id'] ?> " class="btn btn-primary" role="button">Delete</a>
+	    	<a href="/courses/course/drop/<?= $course['id']?>" class="btn btn-primary" role="button">Drop</a>
 	     </p>
 	 </div>
 	 </div>
 
 <?php
 }
-echo "</div>";
+echo "</div></div>";
 
 
 
