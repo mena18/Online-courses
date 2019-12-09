@@ -48,7 +48,7 @@
 			
 		<div class="col-4 pt-5">
 			<div class="card">
-			  <a href="/courses/course/show/<?= $course['id'] ?>"><img  src="<?= public_path($course['image']) ?>" class="card-img-top card_image" alt="#"></a>
+			  <a href="/courses/course/details/<?= $course['id'] ?>"><img  src="<?= public_path($course['image']) ?>" class="card-img-top card_image" alt="#"></a>
 			  <div class="card-body">
 			    <h5 class="card-title"><?= $course['name'] ?></h5>
 			    <div class="pb-2 card_text_container">

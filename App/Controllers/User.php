@@ -9,25 +9,26 @@ class User extends Controller{
 
 	public function store(){
 		if($_SERVER['REQUEST_METHOD'] == 'POST'){
-		$name=$_POST['name'];
-		$type=$_POST['Instructor'];
-		 											 //momken ta3mel keda  >
-			global $conn;
-			if (empty($type)){
-			$sql = "INSERT INTO user (Name, email,password)
-    		VALUES ('$name', '" . $_POST['email']. "',  '" . $_POST['password'] ."');";
-			}
-			else {
-				$sql = "INSERT INTO user (Name, email,password,type)
-	    		VALUES ('$name', '" . $_POST['email']. "',  '" . $_POST['password'] ."','$type');";
+			$name=$_POST['name'];
+			$email = $_POST['email'];
+			$password = $_POST['password'];
 
-			}
-    		//echo $sql;
-    		//sreturn ;
+
+			global $conn;
+			$sql = "INSERT INTO user (name, email,password)  VALUES ('$name', '$email','$password');";
+		
     		$stmt = $conn->prepare($sql);
     		$stmt->execute();
 
-    		header("Location: http://localhost/courses/user/loginview");
+
+    		$sql = "SELECT * from user WHERE email = '$email' AND password = '$password' ;";
+    		$stmt = $conn->prepare($sql);
+    		$stmt->execute();
+    		$user = $stmt->fetch();
+
+    		$_SESSION['user'] = $user;
+
+    		$this->redirect("course/index");
 		}else{
 			echo "you are not allowed here";
 		}

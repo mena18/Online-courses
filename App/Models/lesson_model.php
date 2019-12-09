@@ -9,6 +9,7 @@ class lesson_model extends DataBase{
 	public $course_id;
 	public $description;
 
+	public $table_name = "lesson";
 
 	public static function get_with_course($id){ // select all lessons from specific course
 		$sql = "SELECT * FROM lesson WHERE course_id = $id ORDER BY number ASC";
@@ -54,13 +55,27 @@ class lesson_model extends DataBase{
 			self::$conn->prepare($sql)->execute();
 		}
 	}
-	public function insert_lesson($number,$weeks_number,$name,$id,$desc){
+	public function insert_lesson($number,$week_number,$name,$id,$desc,$video_id){
 
-		$sql = "INSERT INTO lesson (number,week_number,name,course_id,description)
-				VALUES ('$number','$weeks_number','$name',(SELECT id FROM courses WHERE id ='$id'),'$desc');";
+		$sql = "INSERT INTO lesson (number,week_number,name,course_id,description,video_id)
+				VALUES ('$number','$week_number','$name',$id,'$desc','$video_id');";
 
-		$stmt = self::$conn->prepare($sql)->execute();
+		self::query($sql);
 	}
+
+	public function update_lesson($id,$number,$week_number,$name,$desc,$video_id){
+		$sql = "UPDATE  lesson SET number = '$number', week_number = '$week_number',name = '$name',
+		description = '$desc',video_id = '$video_id' WHERE id = '$id' ;";
+
+		self::query($sql);
+	}
+
+	public function delete($id){
+		$sql = "DELETE FROM lesson WHERE id = '$id';";
+		self::query($sql);
+	}
+
+
 
 
 }

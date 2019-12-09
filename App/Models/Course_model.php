@@ -2,7 +2,7 @@
 
 class course_model extends DataBase {
 
-	public $model_name = "courses";
+	public $table_name = "courses";
 	public $data_on_create = ['name','description','image','instructor_id','category','avg_rating','duration_weeks','Finished'];
 
 
@@ -72,6 +72,11 @@ class course_model extends DataBase {
 	public function finish($id){
 		$sql = "UPDATE courses set finish = '1' where id = '$id' ";
 		self::query($sql);
+	}
+
+	public function update_one($id,$key,$value){
+		$sql = "UPDATE courses SET $key = $value WHERE id = '$id'; ";
+		self::query($sql); 
 	}
 
 }

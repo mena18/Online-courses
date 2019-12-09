@@ -23,11 +23,11 @@ require_once("App/views/header.php");
 foreach ($data['courses'] as $course ) {
 	?>
 	<div class="pt-5 col-sm-6 col-md-4 thumbnail">
-	  <a href="/courses/course/show/<?= $course['id'] ?>"><img alt="100%x200" data-src="holder.js/100%x200" src="<?= public_path($course['image']) ?>" style="height: 200px; width: 100%; display: block;"></a>
+	  <a href="/courses/course/details/<?= $course['id'] ?>"><img alt="100%x200" data-src="holder.js/100%x200" src="<?= public_path($course['image']) ?>" style="height: 200px; width: 100%; display: block;"></a>
 	  <div class="caption">
 	   <h3><?= $course['name'] ?></h3>
 	    <p><?= $course['description'] ?><p>
-	    	<a href="/courses/course/deletefromDatabase/ <?= $course['id'] ?> " class="btn btn-danger" role="button">Delete From Database</a>
+	    	<a href="/courses/course/delete/<?= $course['id'] ?>" class="btn btn-danger" role="button">Delete From Database</a>
         <br><br>
         <a href="/courses/course/edit/<?=$course['id']?>"class="btn btn-warning btn-lg" role="button">Modify course</a>
         <br><br>

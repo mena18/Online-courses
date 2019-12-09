@@ -7,16 +7,47 @@ require_once("App/views/header.php");
 
 ?>
 
-<div class="form_div">
-	<h1 >Add lessons</h1>
-	<form action="/courses/lesson/storeLesson_inDatabase/<?= $data['id']?>" method="post">
-		<input required type="text" name="name" placeholder="Lesson Name">
-    <input required type="text" name="week_number" placeholder="week number">
-    <input required type="text" name="number"  placeholder="Lesson number">
-		<input required type="text" name="description" placeholder="Lesson description">
-		<input type="submit">
-	</form>
+<div class="container pb-5">
+    <h1 class="pt-5 pb-5">Create New Lesson</h1>
+    <form  action="/courses/lesson/store/<?=$data['course']['id']?>" method="POST">
+    	
+    	<div class="form-group">
+			<label for="name">Lesson Name</label>
+			<input type="text" class="form-control" name="name" required="required" id="name" aria-describedby="name">
+		</div>
+
+		<div class="form-group">
+			<label for="url">Youtube ID</label>
+			<input type="text" class="form-control" name="video_id" required="required" id="video_id" aria-describedby="name">
+		</div>
+
+		<div class="form-group">
+			<label for="week_number">Week number</label>
+			<input type="number" class="form-control" name="week_number" required="required" id="week_number" aria-describedby="name">
+		</div>
+
+		<div class="form-group">
+			<label for="number">number</label>
+			<input type="number" class="form-control" name="number" required="required" id="number" aria-describedby="name">
+		</div>
+
+		
+
+		<div class="form-group">
+			<label for="description">Lesson Description</label>
+			<textarea rows="7" class="form-control" name="description" required="required" id="description"></textarea>
+		</div>
+
+		<button class="btn btn-success" >Submit</button>
+
+
+    </form>
+
+		
+
 </div>
+
+
 <?php
 
 /*

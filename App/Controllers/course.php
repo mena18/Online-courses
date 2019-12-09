@@ -16,8 +16,22 @@ class course extends Controller{
 	public function details($id){
 		$course = course_model::get($id);
 		$lessons = lesson_model::get_with_course($id);
+		$ins_id = $course['instructor_id'];
+		$instructor = course_model::query_fetch("SELECT * from user where id = $ins_id;");
+
+		$course_id = $course['id'];
+		$user_id=-1;
+		if(isset($_SESSION['user'])){$user_id = $_SESSION['user']['id'];}
+
+
+		$user_course = course_model::query_fetch("SELECT * FROM user_courses WHERE course_id = '$course_id'
+		AND user_id = '$user_id' ");
+
+		$text = 'Register';
+		if($user_course){$text = 'Drop';}
+
 		if($course){
-			$this->view("courses/show2",['course'=>$course,"lessons"=>$lessons]);
+			$this->view("courses/show2",['text'=>$text,'course'=>$course,"lessons"=>$lessons,"instructor"=>$instructor]);
 		}else{
 			$this->redirect("course/index");
 		}
@@ -27,9 +41,25 @@ class course extends Controller{
 	// show course details for register users
 	public function show($id){
 		$course = course_model::get($id);
-		$lessons = lesson_model::get_with_course($id);
+		$course_id = $course['id'];
+		$ins_id = $course['instructor_id'];
+		$user_id = $_SESSION['user']['id'];
+
+		#$lessons_1 = course_model::query_fetch_all("SELECT * from lesson WHERE course_id = '$id' ORDER BY number; ");
+		$lessons_2 = course_model::query_fetch_all("
+			SELECT lesson.*,T.finished FROM lesson LEFT JOIN 
+			(SELECT user_lesson.finished,user_lesson.lesson_id,user.id 
+			FROM user_lesson INNER join user on user.id = user_lesson.user_id WHERE user.id = $user_id ) AS T 
+			on T.lesson_id = lesson.id WHERE lesson.course_id = $course_id ORDER BY lesson.number;  ");
+
+
+		$ins = course_model::query_fetch("SELECT * from user WHERE id = '$ins_id'; ");
+		$weeks = [];
+		foreach ($lessons_2 as $less) {
+			$weeks[$less['week_number']][] = $less;
+		}
 		if($course){
-			$this->view("courses/show1",['course'=>$course,"lessons"=>$lessons]);
+			$this->view("courses/show1",['course'=>$course,"weeks"=>$weeks,"instructor"=>$ins]);
 		}else{
 			$this->redirect("course/index");
 		}

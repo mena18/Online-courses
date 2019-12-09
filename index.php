@@ -4,6 +4,9 @@ $username = "root";
 $password = "";
 
 
+
+
+
 try {
 	
     $conn = new PDO("mysql:host=$servername;dbname=courses", $username, $password);

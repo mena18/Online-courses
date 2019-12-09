@@ -1,27 +1,36 @@
-<?php
+<?php  require_once("App/views/header.php");  ?>
 
-require_once("App/views/header.php");
-
-
+<link rel="stylesheet" type="text/css" href="<?=public_path('css/registration.css') ?>">
 
 
-?>
+<div id=frm>
+    <form action="/courses/User/store" method="POST">
+    	<div class="form-group">
+			<label for="name">Username:</label>
+      		<input type="text" class="form-control" id="name" placeholder="Enter username" name="name" required>
+		</div>
 
-<div class="form_div">
-	<h1 >Registration</h1>
-	<form action="/courses/user/store" method="post">
-		<input required type="text" name="name" placeholder="Name">
-		<input required type="email" name="email" placeholder="Email">
-		<input required type="password" name="password" placeholder="Password">
-		 <input type="checkbox" name="Instructor" value="1" class="important"checked>Instructor<br>
-		<input type="submit">
-	</form>
+		<div  class="form-group">
+      		<label for="email">Email:</label>
+     		<input type="text" class="form-control" id="email" placeholder="Enter email" name="email" required>
+	 	</div>
+
+		<div  class="form-group">
+			<label for="password">Password:</label>
+        	<input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
+      	</div>
+
+      	
+
+		<div  class="form-group"> 
+		 	<input class="form-check-input" type="checkbox"> 
+		 	<label class="form-check-label">Remember me</label>
+      	</div>
+
+	 
+		 <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
-<?php
 
 
-
-
-
-
-require_once("App/views/footer.php");
+<?php  require_once("App/views/footer.php");

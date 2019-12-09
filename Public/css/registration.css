@@ -1,0 +1,17 @@
+body{
+
+  background:#eee;
+}
+
+#frm{
+  border: solid gray 1px;
+  width: 20%;
+  border-radius:50px;
+  margin: 50px auto;
+  background: white;
+  padding: 50px;
+}
+
+.btn{
+  width:50%;
+}
