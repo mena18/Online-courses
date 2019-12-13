@@ -10,21 +10,18 @@
 <body>
 
 <div class="header">
-  <a href="/courses/course/index" class="logo">Courses Website</a>
+  <a href="<?=url("course/index")?>" class="logo">Courses Website</a>
   <div class="header-right">
-    <?php
 
-      if(isset($_SESSION['user'])){  
-        echo "<a href='/courses/profile/index'>". $_SESSION['user']['name'] ."</a>;";
+      <?php if(isset($_SESSION['user'])){ ?>
+        <a href='<?=url("profile/index")?>'><?=$_SESSION['user']['name']?></a>
+        <a href='<?=url("user/logout")?>'>Logout</a>
+      <?php }else{ ?>
+        <a href='<?=url("user/create")?>'>Registration</a>
+        <a href='<?=url("profile/loginview")?>'>Login</a>
+      <?php } ?>
 
-        echo "<a href='/courses/user/logout'>Logout</a>";
-      }else{
-        echo "<a href='/courses/user/create'>Registration</a>";
-        echo "<a href='/courses/user/loginview'>Login</a>";
-      }
 
-    ?>
 
   </div>
 </div>
-

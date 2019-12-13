@@ -1,4 +1,4 @@
-<?php require_once("App/views/header.php"); ?>
+<?php require_once(app_path('views/header.php')); ?>
 
 <style type="text/css">
     p{
@@ -12,27 +12,27 @@
 
 <h3>Create New Quiz</h3>
 
-    <form id="form" action="/courses/quiz/store" method="POST">
-        
+    <form id="form" action="<?=url('quiz/store')?>" method="POST">
+
 
         <input type="hidden" id='hidden' name="value">
-        <input type="submit" name="">
-        
     </form>
 
 
     <div class="pt-2">
-        <button class="float-right btn btn-primary " onclick="add()">Add new Question</button>    
-    </div>
-
-    <div class="text-center mb-5">
-        <button class="w-25 btn btn-success align-center" type='submit' onclick="save()"> SAVE </button>
+        <button class="float-right btn btn-primary " onclick="add()">Add new Question</button>
     </div>
 
     <br><br><br>
 
+    <div class="text-center mb-5">
+        <button class="w-25 btn btn-success align-center" onclick="save()"> SAVE </button>
+    </div>
 
-    
+
+
+
+
 
 
 
@@ -45,4 +45,4 @@
 
 
 
-<?php require_once("App/views/footer.php"); ?>
+<?php require_once(app_path('views/footer.php')); ?>

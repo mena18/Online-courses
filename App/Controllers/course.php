@@ -1,7 +1,7 @@
 <?php
 
-require_once("App/Models/course_model.php");
-require_once("App/Models/lesson_model.php");
+require_once(app_path('Models/course_model.php'));
+require_once(app_path('Models/lesson_model.php'));
 
 class course extends Controller{
 
@@ -47,9 +47,9 @@ class course extends Controller{
 
 		#$lessons_1 = course_model::query_fetch_all("SELECT * from lesson WHERE course_id = '$id' ORDER BY number; ");
 		$lessons_2 = course_model::query_fetch_all("
-			SELECT lesson.*,T.finished FROM lesson LEFT JOIN 
-			(SELECT user_lesson.finished,user_lesson.lesson_id,user.id 
-			FROM user_lesson INNER join user on user.id = user_lesson.user_id WHERE user.id = $user_id ) AS T 
+			SELECT lesson.*,T.finished FROM lesson LEFT JOIN
+			(SELECT user_lesson.finished,user_lesson.lesson_id,user.id
+			FROM user_lesson INNER join user on user.id = user_lesson.user_id WHERE user.id = $user_id ) AS T
 			on T.lesson_id = lesson.id WHERE lesson.course_id = $course_id ORDER BY lesson.number;  ");
 
 
@@ -88,7 +88,7 @@ class course extends Controller{
 
 		if(!isset($_SESSION['user'])){$this->redirect("user/loginview");}
 		course_mode::user_finish($_SESSION['user']['id'],$id);
-	
+
 	}
 
 
@@ -120,7 +120,7 @@ class course extends Controller{
 		$this->redirect("profile/index");
 
 	}
-	
+
 	public function edit($id){
 		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){$this->redirect("course/index");}
 
@@ -130,7 +130,7 @@ class course extends Controller{
 			$this->redirect("course/index");
 		}
 		$category = course_model::get_all_categories();
-		
+
 		$this->view("courses/edit",["category"=>$category,"course"=>$course]);
 	}
 
@@ -154,7 +154,7 @@ class course extends Controller{
 
 		if(!$image){$image = $course['image'];}
 
-		
+
 		course_model::update($id,$name,$description,$image,$instructorid,$duration_weeks,$category_id);
 		$this->redirect("profile/index");
 	}
@@ -164,7 +164,7 @@ class course extends Controller{
 		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){
 			echo $_SESSION['user']['type'] != 1;
 			echo "not allowed to delete ";
-			
+
 			$this->redirect("course/index");
 		}
 
@@ -194,11 +194,11 @@ class course extends Controller{
 	}
 
 	public function crr($n=1){
-		for ($i=0; $i <$n ; $i++) { 
+		for ($i=0; $i <$n ; $i++) {
 			$arr = ["image_1.jpg","image_2.jpg","image_3.jpg","image_4.jpg"];
-			course_model::save("Course_num_".rand(0,1000000),"standard desc","uploads/".$arr[rand(0,3)],0,0,0);	
+			course_model::save("Course_num_".rand(0,1000000),"standard desc","uploads/".$arr[rand(0,3)],0,0,0);
 		}
-		
+
 		$this->redirect("course/index");
 	}
 

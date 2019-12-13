@@ -1,11 +1,11 @@
-<?php  require_once("App/views/header.php"); $course = $data['course'];  ?>
+<?php  require_once(app_path('views/header.php')); $course = $data['course'];  ?>
 
 
 
 <div class="container">
     <h1 class="pt-5 pb-5">Create New Course</h1>
-	<form  action="/courses/course/update/<?=$course['id'] ?>" method="POST" enctype="multipart/form-data">
-		
+	<form  action="<?=url('course/update/')?><?=$course['id'] ?>" method="POST" enctype="multipart/form-data">
+
 		<div class="form-group">
 			<label for="name">Course Name</label>
 			<input type="text" class="form-control" value="<?= $course['name'] ?>" name="name" required="required" id="name" aria-describedby="name">
@@ -15,7 +15,7 @@
 			<label for="category">Select Category</label>
 			<select placeholder="Select category .." required="required" id="category" name="category"  class="form-control">
 				<?php foreach ($data['category'] as $category) { ?>
-					<option value="<?= $category['id'] ?>" 
+					<option value="<?= $category['id'] ?>"
 					<?php  if($category['id'] == $course['category_id']){echo "selected";} ?>
 					 ><?= $category['name'] ?></option>
 				<?php } ?>
@@ -49,4 +49,4 @@
 <div style="height: 100px;"></div>
 
 
-<?php  require_once("App/views/footer.php");
+<?php  require_once(app_path('views/footer.php'));

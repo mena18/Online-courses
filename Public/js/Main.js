@@ -20,7 +20,7 @@ function add_with_radio_buttons(question_n){
     var Great_div = $("<div class='form-group'></div>");
     var p = $("<p contenteditable='true'>Q)Click to change text</p>");
     var divs = [];
-    
+
     for(var i =0 ;i<question_n;i++){
         input = $("<input class='form-check-input' value=val_"+(i+1)+" type='radio' name='question_"+n+"' >");
         label  = $("<label contenteditable='true' class='form-check-label'> Default radio </label>");
@@ -28,7 +28,7 @@ function add_with_radio_buttons(question_n){
         div.append(input);
         div.append(label);
         divs.push(div);
-        
+
     }
 
     Great_div.append(p);
@@ -45,7 +45,7 @@ function add_with_check_buttons(question_n){
     var Great_div = $("<div class='form-group'></div>");
     var p = $("<p contenteditable='true'>Q)Click to change text</p>");
     var divs = [];
-    
+
     for(var i =0 ;i<question_n;i++){
         input = $("<input class='form-check-input' value=val_"+(i+1)+" type='checkbox' name='question_"+n+"[]' >");
         label  = $("<label contenteditable='true' class='form-check-label'> Default radio </label>");
@@ -75,8 +75,8 @@ function save(){
             'ans':[],
             'type':'radio',
         }
-        
-        
+
+
         controls = cur_group.getElementsByClassName('form-check');
         Question['type'] = controls[0].getElementsByTagName('input')[0].type;
 
@@ -97,4 +97,6 @@ function save(){
     console.log(hidden);
     hidden.value = JSON.stringify(Questions);
     console.log(JSON.stringify(Questions));
+
+    form.submit();
 }

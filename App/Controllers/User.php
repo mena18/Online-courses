@@ -16,7 +16,7 @@ class User extends Controller{
 
 			global $conn;
 			$sql = "INSERT INTO user (name, email,password)  VALUES ('$name', '$email','$password');";
-		
+
     		$stmt = $conn->prepare($sql);
     		$stmt->execute();
 

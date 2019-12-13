@@ -1,6 +1,6 @@
 <?php
 
-require_once("App/views/header.php");
+require_once(app_path('views/header.php'));
 
 
 
@@ -9,8 +9,8 @@ require_once("App/views/header.php");
 
 <div class="container pb-5">
     <h1 class="pt-5 pb-5">Create New Lesson</h1>
-    <form  action="/courses/lesson/store/<?=$data['course']['id']?>" method="POST">
-    	
+    <form  action="<?=url('lesson/store/')?><?=$data['course']['id']?>" method="POST">
+
     	<div class="form-group">
 			<label for="name">Lesson Name</label>
 			<input type="text" class="form-control" name="name" required="required" id="name" aria-describedby="name">
@@ -31,7 +31,7 @@ require_once("App/views/header.php");
 			<input type="number" class="form-control" name="number" required="required" id="number" aria-describedby="name">
 		</div>
 
-		
+
 
 		<div class="form-group">
 			<label for="description">Lesson Description</label>
@@ -43,7 +43,7 @@ require_once("App/views/header.php");
 
     </form>
 
-		
+
 
 </div>
 
@@ -59,4 +59,4 @@ $desc=$_POST['description'];
 
 
 
-require_once("App/views/footer.php");
+require_once(app_path('views/footer.php'));

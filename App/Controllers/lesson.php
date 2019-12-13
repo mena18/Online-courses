@@ -1,8 +1,8 @@
 <?php
 
 
-require_once("App/Models/lesson_model.php");
-require_once("App/Models/course_model.php");
+require_once(app_path('Models/lesson_model.php'));
+require_once(app_path('Models/course_model.php'));
 
 class lesson extends Controller{
 
@@ -20,7 +20,7 @@ class lesson extends Controller{
 		if(lesson_model::is_watched($_SESSION['user']['id'],$lesson['id'])){$watched=1;}
 		if($_SESSION['user']['type']>0){
 			$watched=-1;
-			
+
 			if($course['instructor_id'] == $_SESSION['user']['id']){$watched=2;}
 		}
 
@@ -42,7 +42,7 @@ class lesson extends Controller{
 	// instructor create lesson
 	public function create($id){
 		$course = course_model::get($id);
-		
+
 		$this->view("lessons/create",["course"=>$course]);
 	}
 
@@ -68,7 +68,7 @@ class lesson extends Controller{
 	public function edit($id){
 		$lesson = lesson_model::get($id);
 		$course = course_model::get($lesson['course_id']);
-		
+
 		$this->view("lessons/edit",["lesson"=>$lesson]);
 	}
 

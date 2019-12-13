@@ -1,10 +1,10 @@
-<?php  require_once("App/views/header.php");  ?>
+<?php require_once(app_path('Views/header.php'))  ?>
 
 <link rel="stylesheet" type="text/css" href="<?=public_path('css/registration.css') ?>">
 
 
 <div id=frm>
-    <form action="/courses/User/login" method="POST">
+    <form action="<?=url('User/login')?>" method="POST">
 
 		<div  class="form-group">
       		<label for="email">Email:</label>
@@ -16,14 +16,14 @@
         	<input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
       	</div>
 
-      	
 
-		<div  class="form-group"> 
-		 	<input class="form-check-input" type="checkbox"> 
+
+		<div  class="form-group">
+		 	<input class="form-check-input" type="checkbox">
 		 	<label class="form-check-label">Remember me</label>
       	</div>
 
-	 
+
 		 <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
@@ -33,4 +33,4 @@
 
 
 
-<?php  require_once("App/views/footer.php");
+<?php  require_once(app_path('views/footer.php'));

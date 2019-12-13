@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-require_once("App/Models/quiz_model.php");
+require_once(app_path('Models/quiz_model.php'));
 
 class  Quiz  extends Controller{
 
@@ -13,9 +13,9 @@ class  Quiz  extends Controller{
 
 	public function store(){ // missing course_id
 		$Questions = json_decode($_POST['value'],true);
-		
+
 		$week_num = 1;
-		$time = 900; 
+		$time = 900;
 
 		print_r($Questions);
 
@@ -23,16 +23,16 @@ class  Quiz  extends Controller{
 		//$quiz = quiz_model::query_fetch("SELECT * FROM quiz WHERE week_num = '$week_num' AND course_id = '$course_id' ");
 
 		$quiz_id = 1;
-
+		$number=1;
 		foreach ($Questions as $Question) {
 			$q 			= 	$Question['p'];
 			$options 	=  	implode(',',$Question['options']);
 			$answers 	=  	implode(',',$Question['ans']);
 			$type 		=  	$Question['type'];
-			quiz_model::insert_question($q,$options,$answers,$type,$quiz_id);
+			quiz_model::insert_question($q,$options,$answers,$type,$number++,$quiz_id);
 		}
 		return $this->redirect("course/index");
-		
+
 	}
 
 	/* User taking quiz */
@@ -47,9 +47,20 @@ class  Quiz  extends Controller{
 
 	/* User submiting Quiz */
 	public function submit($quiz_id){
-		echo "submit";
-		print_array($_POST);
+		$quiz = quiz_model::get($quiz_id);
+		$Questions = quiz_model::get_questions($quiz['id']);
+
+		$num=1;
+		$grades = 0;
+		foreach ($Questions as $question) {
+				if(!isset($_POST['question_'.$num])){$_POST['question_'.$num] = $question['type']=='radio' ? '':[] ;}
+				$result = compare_questions($question,$_POST['question_'.$num]);
+				$num+=1;
+				$grades+= $result;// $grades+=$result*
+		}
+		echo $grades .'/'. count($Questions);
 	}
+
 
 
 

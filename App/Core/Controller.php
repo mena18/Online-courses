@@ -4,16 +4,16 @@
 class Controller {
 
   function model($model){
-    require_once('App/Models/'.$model.'.php');
+    require_once(app_path('Models/'.$model .".php"));
     return new $model;
   }
 
   function view($view,$data=[]){
-    require_once("App/Views/".$view .".php");
+    require_once(app_path('Views/'.$view .".php"));
   }
 
   function redirect($path){
-    header("Location: http://localhost/courses/".$path);
+    header("Location: http://localhost/courses/Public/".$path);
     exit();
   }
 }

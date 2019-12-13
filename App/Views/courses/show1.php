@@ -1,28 +1,28 @@
-<?php require_once("App/views/header.php"); ?>
+<?php require_once(app_path('views/header.php')); ?>
 
 
   <!--start upper bar-->
 
   <!--end upper bar-->
   <!--name of course-->
-  
+
   <!--beginning of collapse part-->
 <div class="pt-2 pb-2 pl-5">
   <h2 style="font-style: italic;"><?=$data['course']['name']?></h2>
 </div>
 
-<?php 
+<?php
 
 ?>
 <div class="row pl-5 pr-5">
-    
+
   <div class="col-8">
     <div class="accordion" id="accordionExample">
 
       <!-- Start of foor loop -->
       <?php foreach ($data['weeks'] as $week_name => $week) { ?>
-        
-      
+
+
 
       <div class="card">
         <div class="card-header" id="headingOne">
@@ -36,11 +36,11 @@
         <div id="id_<?=$week_name?>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
           <?php foreach ($week as $lesson) { ?>
           <div class="card-body">
-            <a href="/courses/lesson/show/<?=$lesson['id']?>"><?=$lesson['name']?></a>
+            <a href="<?=url('lesson/show/')?><?=$lesson['id']?>"><?=$lesson['name']?></a>
             <?php if($lesson['finished']){ ?>
              <span class="check-box-marked fa fa-check-square-o"></span>
             <?php }else{ ?>
-              <span class="check-box-unmarked fa fa-square-o"></span> 
+              <span class="check-box-unmarked fa fa-square-o"></span>
             <?php } ?>
 
           </div>
@@ -49,9 +49,9 @@
       </div>
 
       <?php } ?>
-    
+
     <!-- End of for loop -->
-  
+
     </div>
   </div>
   <!--end of collapse part-->
@@ -73,4 +73,4 @@
   <!--End of side bar-->
 
 
-<?php require_once("App/views/footer.php"); ?>
+<?php require_once(app_path('views/footer.php')); ?>
