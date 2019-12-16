@@ -1,5 +1,7 @@
 <?php
 
+require_once(app_path("models/user_model.php"));
+require_once(app_path("models/course_model.php"));
 
 class User extends Controller{
 
@@ -28,7 +30,7 @@ class User extends Controller{
 
     		$_SESSION['user'] = $user;
 
-    		$this->redirect("course/index");
+    		redirect("course/index");
 		}else{
 			echo "you are not allowed here";
 		}
@@ -57,7 +59,12 @@ class User extends Controller{
 	    			$_SESSION['user'] = $user;
 	    		}
 
-	    		header("Location: http://localhost/courses");
+					if($user['type']==2){
+						redirect("admin/index");
+					}else{
+						redirect("courses/index");
+					}
+
 
 			} catch (Exception $e) {
 				echo $e;
@@ -72,6 +79,27 @@ class User extends Controller{
 		session_destroy();
 		header("Location: http://localhost/courses");
 	}
+
+
+	public function profile($instructor_id){
+		$instructor = user_model::get($instructor_id);
+
+		$courses = course_model::query_fetch_all("SELECT * FROM courses WHERE instructor_id = '$instructor_id' AND finished = '2'; ");
+		if($instructor['type']!=1){redirect("courses/index");}
+
+		$this->view("user/show_profile",["instructor"=>$instructor,"courses"=>$courses]);
+
+	}
+
+
+	public function edit_profile($instructor_id){
+		echo "editing profile under construction";
+	}
+
+	public function update_profile($instructor_id){
+		echo "update profile under construction";
+	}
+
 
 
 }

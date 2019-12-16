@@ -10,7 +10,11 @@
 <body>
 
 <div class="header">
-  <a href="<?=url("course/index")?>" class="logo">Courses Website</a>
+    <?php if(isset($_SESSION['user']) && $_SESSION['user']['type']==2 ){ ?>
+      <a href="<?=url("admin/index")?>" class="logo">Courses Website</a>
+    <?php }else{ ?>
+      <a href="<?=url("course/index")?>" class="logo">Courses Website</a>
+    <?php } ?>
   <div class="header-right">
 
       <?php if(isset($_SESSION['user'])){ ?>

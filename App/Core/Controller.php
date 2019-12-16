@@ -12,8 +12,4 @@ class Controller {
     require_once(app_path('Views/'.$view .".php"));
   }
 
-  function redirect($path){
-    header("Location: http://localhost/courses/Public/".$path);
-    exit();
-  }
 }

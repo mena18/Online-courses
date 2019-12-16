@@ -35,3 +35,13 @@ function compare_questions($question,$user_answer){
 		return ($correct_ans+$wrong_answers)/count($options);
 
 }
+
+function generate_random_password($n){
+	$r="";
+	$letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^*";
+	$len = strlen($letters);
+	for ($i=0; $i <$n ; $i++) {
+		$r.=$letters[rand(0,$len-1)];
+	}
+	return $r;
+}

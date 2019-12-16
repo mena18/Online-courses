@@ -1,6 +1,6 @@
 * {box-sizing: border-box;}
 
-body { 
+body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -17,7 +17,7 @@ body {
   text-align: center;
   padding: 12px;
   text-decoration: none;
-  font-size: 18px; 
+  font-size: 18px;
   line-height: 25px;
   border-radius: 4px;
 }
@@ -58,8 +58,28 @@ body {
   color:orange;
 }
 
+.fa-github{
+	color:black;
+}
+.fa-facebook{
+	color:#3C5A98;
+}
+.fa-twitter{
+	color:#2AA9E0;
+}
+.fa-linkedin{
+	color:#0073b1;
+}
+.fa-globe{
+	color:gray;
+}
+
 .card_text_container{
   height: 100px;
+  overflow: hidden;
+}
+.card_text_container_profile{
+  height: 70px;
   overflow: hidden;
 }
 .card_image{
@@ -67,6 +87,12 @@ body {
   width: 100%;
   display: block;
 }
+.card_image_profile{
+  height: 80%;
+  width: 100%;
+  display: block;
+}
+
 .check-box-marked{
   float:right;
   font-size:20px;

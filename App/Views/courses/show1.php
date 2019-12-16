@@ -36,7 +36,7 @@
         <div id="id_<?=$week_name?>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
           <?php foreach ($week as $lesson) { ?>
           <div class="card-body">
-            <a href="<?=url('lesson/show/')?><?=$lesson['id']?>"><?=$lesson['name']?></a>
+            <a href="<?=url('lesson/show/')?><?=$lesson['id']?>"><span class="fa fa-youtube-play"> <?=$lesson['name']?></span></a>
             <?php if($lesson['finished']){ ?>
              <span class="check-box-marked fa fa-check-square-o"></span>
             <?php }else{ ?>

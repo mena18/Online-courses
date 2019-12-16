@@ -8,7 +8,7 @@ class course extends Controller{
 	/************************  User section  *******************/
 
 	public function index(){
-		$courses = course_model::get_all();
+		$courses = course_model::get_where("finished","2");
 		$this->view("courses/index",["courses"=>$courses]);
 
 	}
@@ -33,7 +33,7 @@ class course extends Controller{
 		if($course){
 			$this->view("courses/show2",['text'=>$text,'course'=>$course,"lessons"=>$lessons,"instructor"=>$instructor]);
 		}else{
-			$this->redirect("course/index");
+			redirect("course/index");
 		}
 
 	}
@@ -61,32 +61,32 @@ class course extends Controller{
 		if($course){
 			$this->view("courses/show1",['course'=>$course,"weeks"=>$weeks,"instructor"=>$ins]);
 		}else{
-			$this->redirect("course/index");
+			redirect("course/index");
 		}
 	}
 
 	// user_registration into course
 	public function register($id){
-		if(!isset($_SESSION['user'])){$this->redirect("user/loginview");}
+		if(!isset($_SESSION['user'])){redirect("user/loginview");}
 
 		course_model::toggle_in_course($_SESSION['user']['id'],$id);
 
-		$this->redirect("profile/index");
+		redirect("profile/index");
 	}
 
 
 	// user deleting course from his list
 	public function drop($id){
-		if(!isset($_SESSION['user'])){$this->redirect("user/loginview");}
+		if(!isset($_SESSION['user'])){redirect("user/loginview");}
 
 		course_model::toggle_in_course($_SESSION['user']['id'],$id);
-		$this->redirect("profile/index");
+		redirect("profile/index");
 
 	}
 
 	public function user_finish($id){
 
-		if(!isset($_SESSION['user'])){$this->redirect("user/loginview");}
+		if(!isset($_SESSION['user'])){redirect("user/loginview");}
 		course_mode::user_finish($_SESSION['user']['id'],$id);
 
 	}
@@ -97,14 +97,14 @@ class course extends Controller{
 
 	// create course
 	public function create(){
-		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){$this->redirect("course/index");}
+		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("course/index");}
 		$category = course_model::get_all_categories();
 		$this->view("courses/create",['category'=>$category]);
 	}
 
 	//store course in database
 	public function store(){
-		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){$this->redirect("course/index");}
+		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("course/index");}
 
 		$name=$_POST['name'];
 		$desc=$_POST['description'];
@@ -117,17 +117,17 @@ class course extends Controller{
 		if(!$image){$image = 'uploads/default.jpg';}
 
 		course_model::save($name,$desc,$image,$instructorid,$duration_weeks,$category_id);
-		$this->redirect("profile/index");
+		redirect("profile/index");
 
 	}
 
 	public function edit($id){
-		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){$this->redirect("course/index");}
+		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("course/index");}
 
 
 		$course = course_model::get($id);
 		if($course['instructor_id']!=$_SESSION['user']['id']){
-			$this->redirect("course/index");
+			redirect("course/index");
 		}
 		$category = course_model::get_all_categories();
 
@@ -135,12 +135,12 @@ class course extends Controller{
 	}
 
 	public function update($id){
-		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){$this->redirect("course/index");}
+		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("course/index");}
 
 
 		$course = course_model::get($id);
 		if($course['instructor_id']!=$_SESSION['user']['id']){
-			$this->redirect("course/index");
+			redirect("course/index");
 		}
 
 		$name=$_POST['name'];
@@ -156,7 +156,7 @@ class course extends Controller{
 
 
 		course_model::update($id,$name,$description,$image,$instructorid,$duration_weeks,$category_id);
-		$this->redirect("profile/index");
+		redirect("profile/index");
 	}
 
 	// delelte this course frorm the database
@@ -165,31 +165,31 @@ class course extends Controller{
 			echo $_SESSION['user']['type'] != 1;
 			echo "not allowed to delete ";
 
-			$this->redirect("course/index");
+			redirect("course/index");
 		}
 
 
 
 		$course = course_model::get($id);
 		if($course['instructor_id']!=$_SESSION['user']['id']){
-			$this->redirect("course/index");
+			redirect("course/index");
 		}
 
 		course_model::delete($id);
-		$this->redirect("profile/index");
+		redirect("profile/index");
 	}
 
 	/* instructor mark the course as finished */
 	public function instructor_finish($id){
-		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){$this->redirect("course/index");}
+		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("course/index");}
 
 		$course = course_model::get($id);
 		if($course['instructor_id']!=$_SESSION['user']['id']){
-			$this->redirect("course/index");
+			redirect("course/index");
 		}
 
-		course_model::finish($id);
-		$this->redirect("profile/index");
+		course_model::instructor_finish($id);
+		redirect("profile/index");
 
 	}
 
@@ -199,7 +199,7 @@ class course extends Controller{
 			course_model::save("Course_num_".rand(0,1000000),"standard desc","uploads/".$arr[rand(0,3)],0,0,0);
 		}
 
-		$this->redirect("course/index");
+		redirect("course/index");
 	}
 
 }

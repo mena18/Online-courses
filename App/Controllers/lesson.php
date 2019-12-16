@@ -36,7 +36,7 @@ class lesson extends Controller{
 		if(!$var){echo "you don't take this course";return ;}
 
 		lesson_model::toggle_watching($_SESSION['user']['id'],$id);
-		$this->redirect("/lesson/show/".$lesson['id']);
+		redirect("/lesson/show/".$lesson['id']);
 	}
 
 	// instructor create lesson
@@ -47,10 +47,10 @@ class lesson extends Controller{
 	}
 
 	public function store($id){
-		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){$this->redirect("user/loginview");}
+		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("user/loginview");}
 
 		$course = course_model::get($id);
-		if($course['instructor_id']!=$_SESSION['user']['id']){$this->redirect("profile/index");}
+		if($course['instructor_id']!=$_SESSION['user']['id']){redirect("profile/index");}
 
 		$name=$_POST['name'];
 		$weeks_number=$_POST['week_number'];
@@ -61,7 +61,7 @@ class lesson extends Controller{
 
 		course_model::update_one($course['id'],"videos",$course['videos']+1);
 
-		$this->redirect("profile/index");
+		redirect("profile/index");
 	}
 
 
@@ -73,11 +73,11 @@ class lesson extends Controller{
 	}
 
 	public function update($id){
-		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){$this->redirect("user/loginview");}
+		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("user/loginview");}
 
 		$lesson = lesson_model::get($id);
 		$course = course_model::get($lesson['course_id']);
-		if($course['instructor_id']!=$_SESSION['user']['id']){$this->redirect("profile/index");}
+		if($course['instructor_id']!=$_SESSION['user']['id']){redirect("profile/index");}
 
 		$name=$_POST['name'];
 		$weeks_number=$_POST['week_number'];
@@ -85,18 +85,18 @@ class lesson extends Controller{
 		$desc=$_POST['description'];
 		$video_id=$_POST['video_id'];
 		lesson_model::update_lesson($id,$number,$weeks_number,$name,$desc,$video_id);
-		$this->redirect("profile/index");
+		redirect("profile/index");
 	}
 
 	public function delete($id){
-		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){$this->redirect("user/loginview");}
+		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("user/loginview");}
 
 		$lesson = lesson_model::get($id);
 		$course = course_model::get($lesson['course_id']);
-		if($course['instructor_id']!=$_SESSION['user']['id']){$this->redirect("profile/index");}
+		if($course['instructor_id']!=$_SESSION['user']['id']){redirect("profile/index");}
 
 		lesson_model::delete($id);
 		course_model::update_one($course['id'],"videos",$course['videos']-1);
-		$this->redirect("profile/index");
+		redirect("profile/index");
 	}
 }

@@ -38,13 +38,13 @@ class course_model extends DataBase {
 		self::query($sql);
 	}
 
-	
+
 	public function update($id,$name,$description,$image,$instructorid,$duration_weeks,$cetegory_id){
 		$sql = "UPDATE courses SET name = '$name', description = '$description', image = '$image', instructor_id =  '$instructorid', category_id = '$cetegory_id', duration_weeks = '$duration_weeks'  WHERE courses.id = '$id' ;";
 
 		self::query($sql);
 	}
-	
+
 
 	public function delete($id){
 		$sql = "DELETE FROM courses where id = '$id' ";
@@ -69,14 +69,25 @@ class course_model extends DataBase {
 		self::query($sql);
 	}
 
-	public function finish($id){
-		$sql = "UPDATE courses set finish = '1' where id = '$id' ";
+	public function instructor_finish($id){
+		$sql = "UPDATE courses set finished = '1' where id = '$id' ";
+		self::query($sql);
+	}
+
+	public function admin_finish($id){
+		$sql = "UPDATE courses set finished = '2' where id = '$id' ";
 		self::query($sql);
 	}
 
 	public function update_one($id,$key,$value){
 		$sql = "UPDATE courses SET $key = $value WHERE id = '$id'; ";
-		self::query($sql); 
+		self::query($sql);
 	}
+
+	public function get_where($type,$value){
+		$sql = "SELECT * FROM courses WHERE $type = '$value' ";
+		return self::query_fetch_all($sql);
+	}
+
 
 }
