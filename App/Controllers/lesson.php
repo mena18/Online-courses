@@ -7,21 +7,22 @@ require_once(app_path('Models/course_model.php'));
 class lesson extends Controller{
 
 	public function show($id){
-		if(!islogedin()){echo "you are not logged in";return ;}
+		if(!isset($_SESSION['user'])){echo "you are not logged in";return ;}
+
 		$lesson = lesson_model::get($id);
-		$course = course_model::get($lesson['course_id']);
+		$course = $lesson->course();
+		$user = user_model::get($_SESSION['user']['id']);
 
-
-		$var = lesson_model::check_user_registration($_SESSION['user']['id'],$lesson['course_id']);
+		$var = lesson_model::check_user_registration($_SESSION['user']['id'],$lesson->course_id);
 		if(!$var && $_SESSION['user']['type']==0){echo "you don't take this course";return ;}
 
 
 		$watched = 0;
-		if(lesson_model::is_watched($_SESSION['user']['id'],$lesson['id'])){$watched=1;}
-		if($_SESSION['user']['type']>0){
+		if($user->watched($lesson->id)){$watched=1;}
+		if($user->type>0){
 			$watched=-1;
 
-			if($course['instructor_id'] == $_SESSION['user']['id']){$watched=2;}
+			if($course->instructor_id == $user->id ){$watched=2;}
 		}
 
 		$this->view("lessons/show",["lesson"=>$lesson,"watched"=>$watched]);
@@ -32,7 +33,7 @@ class lesson extends Controller{
 		if(!islogedin()){echo "you are not logged in";return ;}
 		$lesson = lesson_model::get($id);
 
-		$var = lesson_model::check_user_registration($_SESSION['user']['id'],$lesson['course_id']);
+		$var = lesson_model::check_user_registration($_SESSION['user']['id'],$lesson->course_id);
 		if(!$var){echo "you don't take this course";return ;}
 
 		lesson_model::toggle_watching($_SESSION['user']['id'],$id);
@@ -52,14 +53,19 @@ class lesson extends Controller{
 		$course = course_model::get($id);
 		if($course['instructor_id']!=$_SESSION['user']['id']){redirect("profile/index");}
 
-		$name=$_POST['name'];
-		$weeks_number=$_POST['week_number'];
-		$number=$_POST['number'];
-		$desc=$_POST['description'];
-		$video_id=$_POST['video_id'];
-		lesson_model::insert_lesson($number,$weeks_number,$name,$id,$desc,$video_id);
+		$lesson = new lesson_model();
 
-		course_model::update_one($course['id'],"videos",$course['videos']+1);
+		$lesson->name=$_POST['name'];
+		$lesson->weeks_number=$_POST['week_number'];
+		$lesson->number=$_POST['number'];
+		$lesson->desc=$_POST['description'];
+		$lesson->video_id=$_POST['video_id'];
+		$lesson->course_id=$id;
+
+		$lesson->save();
+
+		$course->videos+=1;
+		$course->update();
 
 		redirect("profile/index");
 	}
@@ -76,15 +82,17 @@ class lesson extends Controller{
 		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("user/loginview");}
 
 		$lesson = lesson_model::get($id);
-		$course = course_model::get($lesson['course_id']);
+		$course = course_model::get($lesson->course_id);
 		if($course['instructor_id']!=$_SESSION['user']['id']){redirect("profile/index");}
 
-		$name=$_POST['name'];
-		$weeks_number=$_POST['week_number'];
-		$number=$_POST['number'];
-		$desc=$_POST['description'];
-		$video_id=$_POST['video_id'];
-		lesson_model::update_lesson($id,$number,$weeks_number,$name,$desc,$video_id);
+		$lesson->$name=$_POST['name'];
+		$lesson->$weeks_number=$_POST['week_number'];
+		$lesson->$number=$_POST['number'];
+		$lesson->$desc=$_POST['description'];
+		$lesson->$video_id=$_POST['video_id'];
+		$lesson->course_id = $id;
+		$lesson->update();
+
 		redirect("profile/index");
 	}
 

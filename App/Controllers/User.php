@@ -10,30 +10,17 @@ class User extends Controller{
 	}
 
 	public function store(){
-		if($_SERVER['REQUEST_METHOD'] == 'POST'){
-			$name=$_POST['name'];
-			$email = $_POST['email'];
-			$password = $_POST['password'];
+			$user = new user_model();
+			$user->name=$_POST['name'];
+			$user->email = $_POST['email'];
+			$user->password = $_POST['password'];
+			$user->save();
 
+			$user = user_model::where(["email"=>$user->email,"password"=>$user->password]);
+    	$_SESSION['user'] = (array)$user;
 
-			global $conn;
-			$sql = "INSERT INTO user (name, email,password)  VALUES ('$name', '$email','$password');";
+    	redirect("course/index");
 
-    		$stmt = $conn->prepare($sql);
-    		$stmt->execute();
-
-
-    		$sql = "SELECT * from user WHERE email = '$email' AND password = '$password' ;";
-    		$stmt = $conn->prepare($sql);
-    		$stmt->execute();
-    		$user = $stmt->fetch();
-
-    		$_SESSION['user'] = $user;
-
-    		redirect("course/index");
-		}else{
-			echo "you are not allowed here";
-		}
 
 	}
 
@@ -43,49 +30,40 @@ class User extends Controller{
 	}
 
 	public function login(){
-		if($_SERVER['REQUEST_METHOD'] == 'POST'){
-			global $conn;
-			try {
+				$user = user_model::where(["email"=>$_POST['email'],"password"=>$_POST['password']]);
+				if(!$user){redirect("user/loginview");}
+				$_SESSION['user'] = (array)$user[0];
 
-				$v1 = $_POST['email'];
-				$v2 = $_POST['password'];
-				$sql ="SELECT * FROM user WHERE email ='$v1' AND password = '$v2'";
-	    		$stmt = $conn->prepare($sql);
-	    		$stmt->execute();
-
-	    		$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-	    		if($stmt->rowCount() > 0){
-	    			$_SESSION['user'] = $user;
-	    		}
-
-					if($user['type']==2){
-						redirect("admin/index");
-					}else{
-						redirect("courses/index");
-					}
-
-
-			} catch (Exception $e) {
-				echo $e;
-			}
-		}else{
-			echo "you are not allowed here";
-		}
+				if($user->type==2){redirect("admin/index");}
+				else{redirect("courses/index");}
 	}
 
 
 	public function logout(){
 		session_destroy();
-		header("Location: http://localhost/courses");
+		redirect("courses/index");
 	}
 
+	public function classroom(){
+		if(!isset($_SESSION['user'])){redirect("user/loginview");}
+		if($_SESSION['user']['type']==2){redirect("admin/index");}
+
+
+		$user = user_model::get( $_SESSION['user']['id']);
+		$courses = $user->courses();
+		if($_SESSION['user']['type']==1){
+			$this->view("user/profile_instructor",["courses"=>$courses]);
+		}else{
+			$this->view("user/profile_user",["courses"=>$courses]);
+		}
+
+	}
 
 	public function profile($instructor_id){
 		$instructor = user_model::get($instructor_id);
 
-		$courses = course_model::query_fetch_all("SELECT * FROM courses WHERE instructor_id = '$instructor_id' AND finished = '2'; ");
-		if($instructor['type']!=1){redirect("courses/index");}
+		$courses = course_model::where(['instructor_id' => $instructor_id , 'finished' => 2 ]);
+		if($instructor->type!=1){redirect("courses/index");}
 
 		$this->view("user/show_profile",["instructor"=>$instructor,"courses"=>$courses]);
 
@@ -93,11 +71,34 @@ class User extends Controller{
 
 
 	public function edit_profile($instructor_id){
-		echo "editing profile under construction";
+		$instructor = user_model::get($instructor_id);
+		if($_SESSION['user']['id']!=$instructor->id){redirect("courses/index");}
+
+		$this->view("user/edit_profile",['instructor'=>$instructor]);
+
+
 	}
 
 	public function update_profile($instructor_id){
-		echo "update profile under construction";
+		$instructor = user_model::get($instructor_id);
+		if($_SESSION['user']['id']!=$instructor->id){redirect("courses/index");}
+
+		$image = upload_file('image');
+		if($image){$instructor->image=$image;}
+
+		$instructor->name=$_POST['name'];
+		$instructor->description=$_POST['description'];
+		$instructor->email=$_POST['email'];
+		$instructor->bio=$_POST['bio'];
+
+		$instructor->facebook=$_POST['facebook'];
+		$instructor->twitter=$_POST['twitter'];
+		$instructor->linkedin=$_POST['linkedin'];
+		$instructor->github=$_POST['github'];
+
+		$instructor->update();
+
+		redirect("user/profile/".$instructor_id);
 	}
 
 

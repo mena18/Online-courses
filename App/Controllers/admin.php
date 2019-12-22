@@ -1,29 +1,37 @@
 <?php
 
-require_once(app_path("Models/admin_model.php"));
 require_once(app_path("Models/course_model.php"));
 require_once(app_path("Models/user_model.php"));
 require_once(app_path("Models/category_model.php"));
 
 class admin extends Controller{
 
-
   // show every thing all users,all instructors,all courses,all categories
   public function index(){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
-    $this->view("admin/index");
+    $count_courses = course_model::count();
+    $count_categories = category_model::count();
+    $count_users = user_model::count_users();
+    $count_instructors = user_model::count_instructors();
+
+    $this->view("admin/index",[
+      "count_courses"=>$count_courses,
+      "count_categories"=>$count_categories,
+      "count_users"=>$count_users,
+      "count_instructors"=>$count_instructors,
+    ]);
   }
 
   /* show every thing section */
   public function all_users(){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
-    $users = user_model::get_where("type","0");
+    $users = user_model::where(["type"=>0]);
     $this->view("admin/show_users",['users'=>$users]);
   }
 
   public function all_instructors(){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
-    $instructors = user_model::get_where("type","1");
+    $instructors = user_model::where(["type"=>1]);
     $this->view("admin/show_instructors",['instructors'=>$instructors]);
   }
 
@@ -50,40 +58,45 @@ class admin extends Controller{
   public function store_instructor(){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
 
-    $name = $_POST['name'];
-    $email = $_POST['email'];
+    $ins = new user_model();
+    $ins->name = $_POST['name'];
+    $ins->email = $_POST['email'];
+    $ins->type = 1;
+    $ins->password = generate_random_password(15);
+    $ins->save();
 
-    user_model::create_instructor($name,$email);
-    $instructor = user_model::get_where("email",$email);
+    $instructor = user_model::where(["email"=>($ins->email)]);
     $instructor = $instructor[0];
     print_array($instructor);
   }
 
   public function delete_instructor($instructor_id){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
-    user_model::delete($instructor_id);
+    $us = user_model::get($instructor_id);
+    $us->delete();
     redirect("admin/index");
   }
 
 
 
   /* Courses sections */
-  public function hide_course($course_id){
+  public function pend_course($course_id){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
-    course_mode::instructor_finish($course_id); // set finish = 1
-    redirect("admin/index");
+    course_model::instructor_finish($course_id); // set finish = 1
+    redirect("admin/all_courses");
   }
 
   public function accept_course($course_id){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
     course_model::admin_finish($course_id); // set finish = 2
-    redirect("admin/index");
+    redirect("admin/all_courses");
   }
 
   public function delete_course($course_id){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
-    course_model::delete($course_id);
-    redirect("admin/index");
+    $course = course_model::delete($course_id);
+    $course->delete();
+    redirect("admin/all_courses");
   }
 
 
@@ -94,8 +107,9 @@ class admin extends Controller{
   /*Category section*/
   public function store_category(){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
-    $name = "new";//$_POST['name'];
-    category_model::store($name);
+    $category = new category_model();
+    $category->name = $_POST['name'];
+    $category->save();
     redirect("admin/all_categories");
 
   }
@@ -103,14 +117,16 @@ class admin extends Controller{
 
   public function update_category($category_id){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
-    $name = "name2";//$_POST['name'];
-    category_model::update($category_id,$name);
+    $category = category_model::get($category_id);
+    $category->name = $_POST['name'];
+    $category->update();
     redirect("admin/all_categories");
   }
 
   public function delete_category($category_id){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
-    category_model::delete($category_id);
+    $category = category_model::get($category_id);
+    $category->delete();
     redirect("admin/all_categories");
   }
 

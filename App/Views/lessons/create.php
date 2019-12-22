@@ -9,7 +9,7 @@ require_once(app_path('views/header.php'));
 
 <div class="container pb-5">
     <h1 class="pt-5 pb-5">Create New Lesson</h1>
-    <form  action="<?=url('lesson/store/')?><?=$data['course']['id']?>" method="POST">
+    <form  action="<?=url('lesson/store/')?><?=$data['course']->id?>" method="POST">
 
     	<div class="form-group">
 			<label for="name">Lesson Name</label>

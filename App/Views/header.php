@@ -9,23 +9,67 @@
 
 <body>
 
-<div class="header">
-    <?php if(isset($_SESSION['user']) && $_SESSION['user']['type']==2 ){ ?>
-      <a href="<?=url("admin/index")?>" class="logo">Courses Website</a>
-    <?php }else{ ?>
-      <a href="<?=url("course/index")?>" class="logo">Courses Website</a>
-    <?php } ?>
-  <div class="header-right">
 
-      <?php if(isset($_SESSION['user'])){ ?>
-        <a href='<?=url("profile/index")?>'><?=$_SESSION['user']['name']?></a>
-        <a href='<?=url("user/logout")?>'>Logout</a>
-      <?php }else{ ?>
-        <a href='<?=url("user/create")?>'>Registration</a>
-        <a href='<?=url("profile/loginview")?>'>Login</a>
-      <?php } ?>
+<nav class="navbar navbar-expand-md navbar-custom shadow-sm ">
+    <div class="pr-5 pl-5 pb-1 pt-1" style="width:100%;margin:auto;">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Left Side Of Navbar -->
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <?php if(isset($_SESSION['user']) && $_SESSION['user']['type']==2 ){ ?>
+                  <a href="<?=url("admin/index")?>" class="navbar-brand">Courses Website</a>
+                <?php }else{ ?>
+                  <a href="<?=url("course/index")?>" class="navbar-brand">Courses Website</a>
+                <?php } ?>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Explore
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </li>
+
+             </ul>
+
+            <!-- Right Side Of Navbar -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Authentication Links -->
+                <?php if(!isset($_SESSION['user'])){ ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?=url('user/loginview') ?>">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?=url('user/create') ?>">Register</a>
+                    </li>
+
+                <?php }else{?>
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                          <?= $_SESSION['user']['name'] ?> <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                          <?php if($_SESSION['user']['type']==1){ ?>
+                          <a class="dropdown-item" href="<?= url('user/profile/'.$_SESSION['user']['id']) ?>">Profile</a>
+                          <a class="dropdown-item" href="<?= url('user/edit_profile/'.$_SESSION['user']['id']) ?>">Edit Profile </a>
+                        <?php }?>
+                          <a class="dropdown-item" href="<?= url('user/classroom') ?>">My class room </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <a class="dropdown-item" href="<?= url('user/logout'); ?>">
+                                Logout
+                            </a>
 
 
+                    </li>
 
-  </div>
-</div>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
+</nav>

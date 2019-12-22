@@ -8,7 +8,7 @@ class  Quiz  extends Controller{
 	public function create($course_id){
 		if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=1  ){echo "you are not allowed here";return;}
 		$course = course_model::get($course_id);
-		if($course['instructor_id']!=$_SESSION['user']['id']){
+		if($course->instructor_id!=$_SESSION['user']['id']){
 			echo "You aren't the instructor who created the course";return ;
 		}
 
@@ -19,16 +19,21 @@ class  Quiz  extends Controller{
 		if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=1  ){echo "you are not allowed here";return;}
 
 		$course = course_model::get($course_id);
-		if($course['instructor_id']!=$_SESSION['user']['id']){
+		if($course->instructor_id!=$_SESSION['user']['id']){
 			echo "You aren't the instructor who created the course";return ;
 		}
 
-		$Questions = json_decode($_POST['value'],true);
-		$name = $_POST['name'];
-		$description = $_POST['description'];
-		$week_num = $_POST['week_num'];
+		$quiz = new quiz_model();
 
-		quiz_model::create_new_quiz($course_id,$name,$week_num,$description);
+		$quiz->name = $_POST['name'];
+		$quiz->description = $_POST['description'];
+		$quiz->week_num = $_POST['week_num'];
+		$quiz->course_id = $course_id;
+
+		$quiz->save();
+
+
+		$Questions = json_decode($_POST['value'],true);
 		$quiz_id = quiz_model::query_fetch("SELECT MAX(id) FROM quiz");
 		$quiz_id = $quiz_id['MAX(id)'];
 
@@ -51,9 +56,9 @@ class  Quiz  extends Controller{
 		if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=0  ){echo "you are not allowed here";return;}
 
 		$quiz = quiz_model::get($quiz_id);
-		$Questions = quiz_model::get_questions($quiz['id']);
+		$Questions = quiz_model::get_questions($quiz->id);
 
-		$course_id = $quiz['course_id'];
+		$course_id = $quiz->course_id;
 		$course = course_model::get($course_id);
 		if(!course_model::user_course($_SESSION['user']['id'],$course_id)){
 			echo "you don't take the course";
@@ -96,14 +101,15 @@ class  Quiz  extends Controller{
 		if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=0  ){echo "you are not allowed here";return;}
 
 		$quiz = quiz_model::get($quiz_id);
-		$course_id = $quiz['course_id'];
+		$course_id = $quiz->course_id;
 		$course = course_model::get($course_id);
-		if($course['instructor_id']!=$_SESSION['user']['id'] ){
+		if($course->instructor_id!=$_SESSION['user']['id'] ){
 			echo "you aren't the instructor who make the quiz";
 			return ;
 		}
 
-		quiz_model::delete($quiz_id);
+		$quiz->delete();
+		redirect("courses/index");
 
 	}
 

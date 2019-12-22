@@ -5,43 +5,26 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.header {
-  overflow: hidden;
-  background-color: black;
-  padding: 20px 10px;
+.navbar-custom {
+    background-color: black;
 }
-
-.header a {
-  float: left;
-  color: white;
-  text-align: center;
-  padding: 12px;
-  text-decoration: none;
-  font-size: 18px;
-  line-height: 25px;
-  border-radius: 4px;
-}
-
-.header a.logo {
-  font-size: 25px;
+/* change the brand and text color */
+.navbar-custom .navbar-brand{
+  color:white;
+  font-size: 20px;
   font-weight: bold;
 }
-
-.header a:hover {
-  color: dodgerblue;
+.navbar-custom .navbar-text {
+    color: rgba(255,255,255,.8);
 }
-
-.header a.active {
-  background-color: dodgerblue;
-  color: white;
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5);
 }
-
-.header-right {
-  float: right;
-}
-
-.container{
-	padding-top: 20px;
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
 }
 
 

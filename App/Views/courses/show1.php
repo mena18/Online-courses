@@ -1,4 +1,4 @@
-<?php require_once(app_path('views/header.php')); ?>
+<?php require_once(app_path('views/header.php')); $user = $data['user']; ?>
 
 
   <!--start upper bar-->
@@ -8,7 +8,7 @@
 
   <!--beginning of collapse part-->
 <div class="pt-2 pb-2 pl-5">
-  <h2 style="font-style: italic;"><?=$data['course']['name']?></h2>
+  <h2 style="font-style: italic;"><?=$data['course']->name?></h2>
 </div>
 
 <?php
@@ -36,8 +36,8 @@
         <div id="id_<?=$week_name?>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
           <?php foreach ($week as $lesson) { ?>
           <div class="card-body">
-            <a href="<?=url('lesson/show/')?><?=$lesson['id']?>"><span class="fa fa-youtube-play"> <?=$lesson['name']?></span></a>
-            <?php if($lesson['finished']){ ?>
+            <a href="<?=url('lesson/show/')?><?=$lesson->id?>"><span class="fa fa-youtube-play"> <?=$lesson->name?></span></a>
+            <?php if($user->watched($lesson->id)){ ?>
              <span class="check-box-marked fa fa-check-square-o"></span>
             <?php }else{ ?>
               <span class="check-box-unmarked fa fa-square-o"></span>
@@ -58,14 +58,14 @@
   <!--start of side bar-->
   <div class="col-4">
     <div class="sidebar">
-      <img src="<?= public_path($data['course']['image']) ?>" style="width: 200px">
+      <img src="<?= public_path($data['course']->image) ?>" style="width: 200px">
       <br>
-      <img src="<?= public_path($data['instructor']['image']) ?>">
+      <img src="<?= public_path($data['instructor']->image) ?>">
       <br>
-      <p> <?= $data['instructor']['name'] ?>, <?= $data['instructor']['description'] ?></p>
+      <p> <?= $data['instructor']->name ?>, <?= $data['instructor']->description ?></p>
       <h3>Description</h3>
       <p>
-        <?= $data['course']['description']; ?>
+        <?= $data['course']->description; ?>
       </p>
     </div>
   </div>

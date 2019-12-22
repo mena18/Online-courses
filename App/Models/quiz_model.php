@@ -3,7 +3,11 @@
 class quiz_model extends DataBase{
 
 
-	public $table_name = "quiz";
+	public static $table_name = "quiz";
+	public static $class_name = "quiz_model";
+	public static $fill = ['number','week_num','course_id',
+	'total_marks','description'];
+
 
 	public function insert_question($q,$options,$answers,$type,$number,$quiz_id){
 		$sql = "INSERT INTO questions (question,options,answer,type,quiz_id,number)
@@ -11,16 +15,7 @@ class quiz_model extends DataBase{
 		self::query($sql);
 	}
 
-	public function create_new_quiz($course_id,$name,$week_num,$description,$total_marks=5){
-		$sql = "INSERT INTO quiz (name,week_num,course_id,description,total_marks)
-		VALUES ('$name','$week_num','$course_id','$description','$total_marks');";
-		self::query($sql);
-	}
 
-	public function get($id){
-		$sql = "SELECT * FROM quiz WHERE id = '$id' ";
-		return self::query_fetch($sql);
-	}
 	public function get_questions($quiz_id){
 		$sql = "SELECT * FROM questions WHERE quiz_id = '$quiz_id' ORDER BY questions.number";
 		return self::query_fetch_all($sql);
@@ -32,10 +27,6 @@ class quiz_model extends DataBase{
 		self::query($sql);
 	}
 
-	public function delete($id){
-		$sql = "DELETE FROM quiz WHERE id = '$id';";
-		self::query($sql);
-	}
 
 
 

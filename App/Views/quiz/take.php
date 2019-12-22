@@ -5,7 +5,7 @@
 
 <div class="container">
 
-	<form action="<?=url('quiz/submit/')?><?=$quiz['id']?>" method="POST">
+	<form action="<?=url('quiz/submit/')?><?=$quiz->id?>" method="POST">
 		<?php foreach ($questions as $question) { ?>
 			<div class='form-group'>
 				<h1><?=++$counter?><?=$question['question']?>  </h1>

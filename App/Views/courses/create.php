@@ -14,7 +14,7 @@
 			<select placeholder="Select category .." required="required" id="category" name="category"  class="form-control">
 				<option selected="true" disabled="disabled">Choose Category ..</option>
 				<?php foreach ($data['category'] as $category) { ?>
-					<option value="<?= $category['id'] ?>" ><?= $category['name'] ?></option>
+					<option value="<?= $category->id ?>" ><?= $category->name ?></option>
 				<?php } ?>
 			</select>
 		</div>
