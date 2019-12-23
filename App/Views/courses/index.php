@@ -56,7 +56,7 @@
 			    	<p class="card-text"><?= $course->description ?></p>
 				</div>
 				<div class="pt-3 pb-3">
-					<span class="float-left fa fa-youtube-play"> <?= $course->videos ?></span>
+					<span class="float-left"><span class="fa fa-youtube-play"></span> <span><?= $course->videos ?></span>  </span>
 					<span class="float-right fa fa-clock-o"> <?= $course->total_time ?></span>
 				</div>
 				<hr>

@@ -37,3 +37,6 @@ $lesson = $data['lesson'];
 
 
 </div>
+
+
+<?php require_once(app_path('views/footer.php')); ?>

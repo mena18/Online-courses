@@ -40,6 +40,14 @@ class user_model extends DataBase{
 		return $ans[0];
 	}
 
+	#check if user take quiz or not
+	public function finished_quiz($id){
+		$user_id = $this->id;
+		$sql = "SELECT marks FROM user_quiz WHERE user_id = '$user_id'  AND quiz_id = '$id' ";
+		$ans = self::get_one($sql);
+		return $ans[0];
+	}
+
 
 	public function count_users(){
 		$var = self::get_one("SELECT count(id) FROM user WHERE type='0';");

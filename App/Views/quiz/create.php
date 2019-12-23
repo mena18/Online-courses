@@ -1,4 +1,4 @@
-<?php require_once(app_path('views/header.php')); $course_id = $data['course']['id']; ?>
+<?php require_once(app_path('views/header.php')); $course_id = $data['course']->id; ?>
 
 <style type="text/css">
     p{

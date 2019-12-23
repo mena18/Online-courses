@@ -20,31 +20,47 @@
     <div class="accordion" id="accordionExample">
 
       <!-- Start of foor loop -->
+
       <?php foreach ($data['weeks'] as $week_name => $week) { ?>
-
-
 
       <div class="card">
         <div class="card-header" id="headingOne">
           <h2 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#id_<?=$week_name?>" aria-expanded="true" aria-controls="collapseOne">
+            <button class="black bold btn btn-link" type="button" data-toggle="collapse" data-target="#id_<?=$week_name?>" aria-expanded="true" aria-controls="collapseOne">
               Week <?=$week_name?>
             </button>
           </h2>
         </div>
 
         <div id="id_<?=$week_name?>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-          <?php foreach ($week as $lesson) { ?>
-          <div class="card-body">
-            <a href="<?=url('lesson/show/')?><?=$lesson->id?>"><span class="fa fa-youtube-play"> <?=$lesson->name?></span></a>
-            <?php if($user->watched($lesson->id)){ ?>
-             <span class="check-box-marked fa fa-check-square-o"></span>
-            <?php }else{ ?>
-              <span class="check-box-unmarked fa fa-square-o"></span>
+
+
+          <?php foreach ($week as $ob) { ?>
+
+
+            <?php if($ob['type']=='lesson'){ $lesson = $ob['content']; ?>
+              <div class="card-body">
+                <a href="<?=url('lesson/show/')?><?=$lesson->id?>"><span class="fa fa-youtube-play"></span> <span class="black hover_red"><?=$lesson->name?></span></a>
+                <?php if($user->watched($lesson->id)){ ?>
+                 <span class="check-box-marked fa fa-check-square-o"></span>
+                <?php }else{ ?>
+                  <span class="check-box-unmarked fa fa-square-o"></span>
+                  <!-- <span class="check-box-unmarked fa fa-question-circle"></span> -->
+                <?php } ?>
+
+              </div>
+            <?php }else if($ob['type']=='quiz'){ $quiz = $ob['content']; ?>
+              <div class="card-body">
+                <a href="<?=url('quiz/take/'.$quiz->id)?>" ><span class="black hover_blue fa fa-question-circle"> <?=$quiz->name?></span></a>
+
+                 <span class="float-right"><?=$user->finished_quiz($quiz->id)?>/<?=$quiz->total_marks?> </span>
+              </div>
             <?php } ?>
 
-          </div>
+
           <?php } ?>
+
+
         </div>
       </div>
 

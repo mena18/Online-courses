@@ -61,12 +61,18 @@ class course extends Controller{
 */
 
 	$lessons = $course->lessons();
+	$quizzes = $course->quizzes();
+
 
 		$weeks = [];
 		foreach ($lessons as $less) {
-			$weeks[$less->week_number][] = $less;
+			$weeks[$less->week_number][] = ["type"=>"lesson","content"=>$less];
+		}
+		foreach ($quizzes as $quiz) {
+			$weeks[$quiz->week_num][] = ["type"=>"quiz","content"=>$quiz];
 		}
 
+		ksort($weeks);
 		$this->view("courses/show1",['course'=>$course,"user"=>$user,"weeks"=>$weeks,"instructor"=>$instructor]);
 
 	}
@@ -77,7 +83,7 @@ class course extends Controller{
 
 		course_model::toggle_in_course($_SESSION['user']['id'],$id);
 
-		redirect("profile/index");
+		redirect("user/classroom");
 	}
 
 
@@ -86,7 +92,7 @@ class course extends Controller{
 		if(!isset($_SESSION['user'])){redirect("user/loginview");}
 
 		course_model::toggle_in_course($_SESSION['user']['id'],$id);
-		redirect("profile/index");
+		redirect("user/classroom");
 
 	}
 
@@ -126,7 +132,7 @@ class course extends Controller{
 
 		$course->save();
 
-		redirect("profile/index");
+		redirect("user/classroom");
 
 	}
 
@@ -163,7 +169,7 @@ class course extends Controller{
 		$course->category_id=$_POST['category'];
 		$course->update();
 
-		redirect("profile/index");
+		redirect("user/classroom");
 	}
 
 	// delelte this course frorm the database
@@ -177,7 +183,7 @@ class course extends Controller{
 		}
 
 		course_model::delete($id);
-		redirect("profile/index");
+		redirect("user/classroom");
 	}
 
 	/* instructor mark the course as finished */

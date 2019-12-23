@@ -17,7 +17,7 @@ class User extends Controller{
 			$user->save();
 
 			$user = user_model::where(["email"=>$user->email,"password"=>$user->password]);
-    	$_SESSION['user'] = (array)$user;
+    	$_SESSION['user'] = (array)$user[0];
 
     	redirect("course/index");
 

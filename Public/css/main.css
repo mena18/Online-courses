@@ -4,7 +4,9 @@ body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
-
+a:hover{
+  text-decoration-line: none;
+}
 .navbar-custom {
     background-color: black;
 }
@@ -44,6 +46,10 @@ body {
 .fa-github{
 	color:black;
 }
+.fa-youtube-play{
+	color:red;
+}
+
 .fa-facebook{
 	color:#3C5A98;
 }
@@ -85,4 +91,23 @@ body {
   float:right;
   font-size:20px;
   color:black;
+}
+
+/* show 1 card body  */
+.black{
+  color:black;
+}
+.hover_blue:hover{
+  color:blue
+}
+.hover_red:hover{
+  color:red;
+  font-weight: bold;
+}
+.bold{
+  color:black;
+  font-weight: bold;
+}
+.bold:hover,.bold:focus{
+  text-decoration-line: none;
 }

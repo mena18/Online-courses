@@ -21,6 +21,8 @@ function upload_file($name){
 	return $img_name;
 }
 
+
+
 function compare_questions($question,$user_answer){
 		$correct_answer = $question['answer'];
 		if(!is_array($user_answer)){return $correct_answer == $user_answer ? 1 : 0;}

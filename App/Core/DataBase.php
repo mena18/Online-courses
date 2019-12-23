@@ -65,6 +65,8 @@ class DataBase{
 		return $var[0];
 	}
 
+
+
 	public function save(){
 		$data = "(".implode(",",static::$fill).")";
 		$arr_2 = [];

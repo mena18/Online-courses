@@ -36,6 +36,18 @@ class course_model extends DataBase {
 		return self::query_fetch_all($sql);
 	}
 
+	public function quizzes(){
+		$id = $this->id;
+		$sql = "SELECT * FROM quiz WHERE course_id = '$id' ;";
+		return self::query_fetch_all($sql);
+	}
+
+	public function assignments(){
+		$id = $this->id;
+		$sql = "SELECT * FROM assignment WHERE course_id = '$id' ;";
+		return self::query_fetch_all($sql);
+	}
+
 
 
 	public function toggle_in_course($user_id,$course_id){
@@ -63,6 +75,7 @@ class course_model extends DataBase {
 		$sql = "UPDATE courses set finished = '2' where id = '$id' ";
 		self::query($sql);
 	}
+
 
 
 

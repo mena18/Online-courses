@@ -6,6 +6,7 @@ class Mail{
   public $mail;
   public $subject;
   public $Body= '<h1>Body</h1>';
+
   public function __construct(){
     $this->mail = new PHPMailer;
     $this->mail->isSMTP();
@@ -16,11 +17,12 @@ class Mail{
     $this->mail->Port = 587;
     $this->mail->SMTPSecure = 'tls';
     $this->mail->SMTPAuth = true;
-    $this->mail->Username = "menan381@gmail.com";
-    $this->mail->Password = "123102030";
+    $this->mail->Username = "mail";
+    $this->mail->Password = "password";
     $this->mail->setFrom('menan381@gmail.com');
     $this->subject='Subject';
   }
+
 
   public function send($emails){
     $this->mail->Subject = $this->subject;
@@ -32,8 +34,4 @@ class Mail{
     	$this->mail->ClearAddresses();
     }
   }
-
-
-
-
 }

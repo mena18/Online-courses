@@ -3,6 +3,7 @@
 
 require_once(app_path('Models/lesson_model.php'));
 require_once(app_path('Models/course_model.php'));
+require_once(app_path('Models/user_model.php'));
 
 class lesson extends Controller{
 
@@ -37,7 +38,7 @@ class lesson extends Controller{
 		if(!$var){echo "you don't take this course";return ;}
 
 		lesson_model::toggle_watching($_SESSION['user']['id'],$id);
-		redirect("/lesson/show/".$lesson['id']);
+		redirect("/lesson/show/".$lesson->id);
 	}
 
 	// instructor create lesson
@@ -51,14 +52,14 @@ class lesson extends Controller{
 		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("user/loginview");}
 
 		$course = course_model::get($id);
-		if($course['instructor_id']!=$_SESSION['user']['id']){redirect("profile/index");}
+		if($course->instructor_id!=$_SESSION['user']['id']){redirect("user/classroom");}
 
 		$lesson = new lesson_model();
 
 		$lesson->name=$_POST['name'];
-		$lesson->weeks_number=$_POST['week_number'];
+		$lesson->week_number=$_POST['week_number'];
 		$lesson->number=$_POST['number'];
-		$lesson->desc=$_POST['description'];
+		$lesson->description=$_POST['description'];
 		$lesson->video_id=$_POST['video_id'];
 		$lesson->course_id=$id;
 
@@ -67,13 +68,13 @@ class lesson extends Controller{
 		$course->videos+=1;
 		$course->update();
 
-		redirect("profile/index");
+		redirect("user/classroom");
 	}
 
 
 	public function edit($id){
 		$lesson = lesson_model::get($id);
-		$course = course_model::get($lesson['course_id']);
+		$course = course_model::get($lesson->course_id);
 
 		$this->view("lessons/edit",["lesson"=>$lesson]);
 	}
@@ -83,28 +84,31 @@ class lesson extends Controller{
 
 		$lesson = lesson_model::get($id);
 		$course = course_model::get($lesson->course_id);
-		if($course['instructor_id']!=$_SESSION['user']['id']){redirect("profile/index");}
+		if($course->instructor_id!=$_SESSION['user']['id']){redirect("user/classroom");}
 
-		$lesson->$name=$_POST['name'];
-		$lesson->$weeks_number=$_POST['week_number'];
-		$lesson->$number=$_POST['number'];
-		$lesson->$desc=$_POST['description'];
-		$lesson->$video_id=$_POST['video_id'];
-		$lesson->course_id = $id;
+
+		$lesson->name=$_POST['name'];
+		$lesson->week_number=$_POST['week_number'];
+		$lesson->number=$_POST['number'];
+		$lesson->description=$_POST['description'];
+		$lesson->video_id=$_POST['video_id'];
+
 		$lesson->update();
 
-		redirect("profile/index");
+		redirect("lesson/edit/".$id);
 	}
 
 	public function delete($id){
 		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("user/loginview");}
 
 		$lesson = lesson_model::get($id);
-		$course = course_model::get($lesson['course_id']);
-		if($course['instructor_id']!=$_SESSION['user']['id']){redirect("profile/index");}
+		$course = $lesson->course();
+		if($course->instructor_id!=$_SESSION['user']['id']){redirect("user/classroom");}
 
-		lesson_model::delete($id);
-		course_model::update_one($course['id'],"videos",$course['videos']-1);
-		redirect("profile/index");
+		$lesson->delete();
+		$course->videos-=1;
+		$course->update();
+
+		redirect("user/classroom");
 	}
 }

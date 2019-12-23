@@ -5,8 +5,8 @@ class quiz_model extends DataBase{
 
 	public static $table_name = "quiz";
 	public static $class_name = "quiz_model";
-	public static $fill = ['number','week_num','course_id',
-	'total_marks','description'];
+	public static $fill = ['week_num','course_id',
+	'total_marks','description','name'];
 
 
 	public function insert_question($q,$options,$answers,$type,$number,$quiz_id){
@@ -18,7 +18,7 @@ class quiz_model extends DataBase{
 
 	public function get_questions($quiz_id){
 		$sql = "SELECT * FROM questions WHERE quiz_id = '$quiz_id' ORDER BY questions.number";
-		return self::query_fetch_all($sql);
+		return self::get_array($sql);
 	}
 
 	public function add_grade($marks,$quiz_id,$user_id){
