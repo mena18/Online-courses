@@ -46,9 +46,5 @@ DataBase::$conn = $conn;
 
 
 
+
 $app = new App();
-
-
-
-
-//end
