@@ -56,13 +56,14 @@
 			    	<p class="card-text"><?= $course->description ?></p>
 				</div>
 				<div class="pt-3 pb-3">
-					<span class="float-left"><span class="fa fa-youtube-play"></span> <span><?= $course->videos ?></span>  </span>
-					<span class="float-right fa fa-clock-o"> <?= $course->total_time ?></span>
+					<span class="float-left"><span class="fa fa-youtube-play"></span> <span><?= count($course->lessons()) ?></span>  </span>
+					<span class="float-right fa fa-clock-o"> <?= gmdate("H:i:s", $course->total_time()); ?></span>
 				</div>
 				<hr>
 				<div class="pt-3" align="center">
+					<?php $course_avg_rating = $course->rating(); ?>
 					<?php for ($i=1; $i <=5 ; $i++) { ?>
-						<span class="fa fa-star <?php if($course->avg_rating >= $i){echo 'checked';} ?>"></span>
+						<span class="fa fa-star <?php if($course_avg_rating >= $i){echo 'checked';} ?>"></span>
 					<?php } ?>
 				</div>
 

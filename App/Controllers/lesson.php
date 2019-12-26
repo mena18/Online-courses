@@ -60,13 +60,18 @@ class lesson extends Controller{
 		$lesson->week_number=$_POST['week_number'];
 		$lesson->number=$_POST['number'];
 		$lesson->description=$_POST['description'];
-		$lesson->video_id=$_POST['video_id'];
+		$lesson->duration =  $_POST['duration_h']*3600 + $_POST['duration_m']*60; + $_POST['duration_s'];;
 		$lesson->course_id=$id;
 
-		$lesson->save();
+		if(strpos($_POST['video_id'], "?v=")){
+			$lesson->video_id=explode("&",explode("?v=",$_POST['video_id'])[1])[0];
+		}else{
+			$lesson->video_id=$_POST['video_id'];
+		}
 
-		$course->videos+=1;
-		$course->update();
+
+
+		$lesson->save();
 
 		redirect("user/classroom");
 	}
@@ -91,7 +96,14 @@ class lesson extends Controller{
 		$lesson->week_number=$_POST['week_number'];
 		$lesson->number=$_POST['number'];
 		$lesson->description=$_POST['description'];
-		$lesson->video_id=$_POST['video_id'];
+		$lesson->duration =  $_POST['duration_h']*3600 + $_POST['duration_m']*60; + $_POST['duration_s'];
+		$lesson->course_id=$course->id;
+
+		if(strpos($_POST['video_id'], "?v=")){
+			$lesson->video_id=explode("&",explode("?v=",$_POST['video_id'])[1])[0];
+		}else{
+			$lesson->video_id=$_POST['video_id'];
+		}
 
 		$lesson->update();
 
@@ -106,8 +118,6 @@ class lesson extends Controller{
 		if($course->instructor_id!=$_SESSION['user']['id']){redirect("user/classroom");}
 
 		$lesson->delete();
-		$course->videos-=1;
-		$course->update();
 
 		redirect("user/classroom");
 	}

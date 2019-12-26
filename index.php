@@ -44,8 +44,6 @@ require_once(app_path('Core/Mail.php'));
 DataBase::$conn = $conn;
 
 
-
-
 $app = new App();
 
 

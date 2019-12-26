@@ -11,13 +11,13 @@ require_once(app_path('views/header.php'));
     <h1 class="pt-5 pb-5">Create New Lesson</h1>
     <form  action="<?=url('lesson/store/')?><?=$data['course']->id?>" method="POST">
 
-    	<div class="form-group">
+    <div class="form-group">
 			<label for="name">Lesson Name</label>
 			<input type="text" class="form-control" name="name" required="required" id="name" aria-describedby="name">
 		</div>
 
 		<div class="form-group">
-			<label for="url">Youtube ID</label>
+			<label for="url">Youtube (url/ID)</label>
 			<input type="text" class="form-control" name="video_id" required="required" id="video_id" aria-describedby="name">
 		</div>
 
@@ -31,6 +31,21 @@ require_once(app_path('views/header.php'));
 			<input type="number" class="form-control" name="number" required="required" id="number" aria-describedby="name">
 		</div>
 
+
+    <div class="form-group">
+      <label >Duration</label>
+      <div class="row">
+        <div class="col">
+          <input placeholder="Hours" type="number"class="form-control" name="duration_h" aria-describedby="name">
+        </div>
+        <div class="col">
+          <input placeholder="Minutes" type="number"class="form-control" name="duration_m"  aria-describedby="name">
+        </div>
+        <div class="col">
+          <input placeholder="seconds" type="number"class="form-control" name="duration_s" aria-describedby="name">
+        </div>
+      </div>
+    </div>
 
 
 		<div class="form-group">

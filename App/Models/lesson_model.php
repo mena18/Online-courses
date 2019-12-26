@@ -12,7 +12,7 @@ class lesson_model extends DataBase{
 	public static $table_name = "lesson";
   public static $class_name = "lesson_model";
 	public static $fill = ['number','week_number','video_id',
-	'name','course_id','description'];
+	'name','course_id','description','duration'];
 
 
 	public static function get_with_course($id){ // select all lessons from specific course

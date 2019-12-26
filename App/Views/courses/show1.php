@@ -64,6 +64,11 @@
         </div>
       </div>
 
+
+      <?php }
+      $finished = $user->course_progress($data['course']->id);
+      if($finished==1){ ?>
+          <a href="<?=url('course/user_finish/'.$data['course']->id)?>" class="btn btn-primary mt-5 mb-5">Finish course</a>
       <?php } ?>
 
     <!-- End of for loop -->
@@ -74,8 +79,6 @@
   <!--start of side bar-->
   <div class="col-4">
     <div class="sidebar">
-      <img src="<?= public_path($data['course']->image) ?>" style="width: 200px">
-      <br>
       <img src="<?= public_path($data['instructor']->image) ?>">
       <br>
       <p> <?= $data['instructor']->name ?>, <?= $data['instructor']->description ?></p>

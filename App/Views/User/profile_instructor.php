@@ -20,12 +20,13 @@ require_once(app_path('views/header.php'));
     	  <div class="caption">
     	   <h3><?= $course->name ?></h3>
     	    <p><?= $course->description ?></p>
-    	    	<a href="<?=url('course/delete/')?><?= $course->id ?>" class="btn btn-danger" role="button">Delete From Database</a>
-            <br><br>
-            <a href="<?=url('course/edit/')?><?=$course->id?>"class="btn btn-warning btn-lg" role="button">Modify course</a>
-            <br><br>
-            <a href="<?=url('lesson/create/')?><?= $course->id ?>" class="btn btn-info btn-lg">Add lessons</a>
-            <br><br>
+    	    	<a href="<?=url('course/delete/')?><?= $course->id ?>" class="mb-3 btn btn-danger" role="button">Delete From Database</a>
+
+            <a href="<?=url('course/edit/')?><?=$course->id?>"class="mb-3 btn btn-warning btn-lg" role="button">Modify course</a>
+
+            <a href="<?=url('lesson/create/')?><?= $course->id ?>" class="mb-3 btn btn-info btn-lg">Add lessons</a>
+            <a href="<?=url('quiz/create/')?><?= $course->id ?>" class="mb-3 btn btn-info btn-lg">Add Quiz</a>
+
             <?php if($course->finished==0){ ?>
               <a href="<?=url('course/instructor_finish/'.$course->id)?>"  class="btn btn-primary btn-lg">Finish</a>
             <?php }else{ ?>

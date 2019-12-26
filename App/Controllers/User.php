@@ -13,7 +13,7 @@ class User extends Controller{
 			$user = new user_model();
 			$user->name=$_POST['name'];
 			$user->email = $_POST['email'];
-			$user->password = $_POST['password'];
+			$user->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 			$user->save();
 
 			$user = user_model::where(["email"=>$user->email,"password"=>$user->password]);
@@ -30,8 +30,9 @@ class User extends Controller{
 	}
 
 	public function login(){
-				$user = user_model::where(["email"=>$_POST['email'],"password"=>$_POST['password']]);
-				if(!$user){redirect("user/loginview");}
+				$user = user_model::where(["email"=>$_POST['email']]);
+				$vert =  password_verify($_POST['password'],$user[0]->password);
+				if(!$vert){redirect("user/loginview");}
 				$_SESSION['user'] = (array)$user[0];
 
 				if($user->type==2){redirect("admin/index");}
@@ -50,11 +51,14 @@ class User extends Controller{
 
 
 		$user = user_model::get( $_SESSION['user']['id']);
-		$courses = $user->courses();
 		if($_SESSION['user']['type']==1){
+			$courses = $user->courses();
 			$this->view("user/profile_instructor",["courses"=>$courses]);
 		}else{
-			$this->view("user/profile_user",["courses"=>$courses]);
+			$finished_courses = $user->finished_courses();
+			$current_courses = $user->current_courses();
+			$this->view("user/profile_user",["finished_courses"=>$finished_courses,"courses"=>$current_courses]);
+
 		}
 
 	}

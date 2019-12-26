@@ -25,6 +25,7 @@
 
 	<?php if(isset($_SESSION['user']) && $_SESSION['user']['type']==1 && $course->instructor_id==$_SESSION['user']['id'] ){?>
 	<a href="<?=url('lesson/create/')?><?=$course->id?>" class="btn btn-info btn-lg">Add lesson</a>
+	<a href="<?=url('quiz/create/')?><?=$course->id?>" class="btn btn-info btn-lg">Add Quiz</a>
 	<a href="<?=url('course/instructor_finish/'.$course->id)?>_delete/<?=$course->id?>" class="btn btn-primary btn-lg">Finish Course</a>
 	<?php }else if(isset($_SESSION['user']) && $_SESSION['user']['type']==0){ ?>
 	<a href="<?=url('course/register/')?><?=$course->id?>" class="btn btn-info btn-lg"><?=$data['text']?></a>

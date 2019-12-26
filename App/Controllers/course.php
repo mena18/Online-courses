@@ -100,7 +100,7 @@ class course extends Controller{
 
 		if(!isset($_SESSION['user'])){redirect("user/loginview");}
 		course_model::user_finish($_SESSION['user']['id'],$id);
-
+		redirect("user/classroom");
 	}
 
 

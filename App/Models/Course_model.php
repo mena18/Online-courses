@@ -23,6 +23,20 @@ class course_model extends DataBase {
 		return self::query_fetch($sql);
 	}
 
+	public function rating(){
+		$id = $this->id;
+		$sql = "SELECT AVG(rating) FROM user_courses WHERE course_id = '$id'; ";
+		$var = self::get_one($sql);
+		return $var[0];
+	}
+
+	public function total_time(){
+		$id = $this->id;
+		$sql = "SELECT  sum(duration) FROM lesson WHERE course_id = '$id'; ";
+		$var = self::get_one($sql);
+		return $var[0];
+	}
+
 
 	public function instructor(){
 		$id = $this->instructor_id;
@@ -62,7 +76,7 @@ class course_model extends DataBase {
 	}
 
 	public function user_finish($user_id,$course_id){
-		$sql = "UPDATE user_course SET finished = '1' WHERE course_id='$course_id' AND user_id = '$user_id' ";
+		$sql = "UPDATE user_courses SET finished = '1' WHERE course_id='$course_id' AND user_id = '$user_id' ";
 		self::query($sql);
 	}
 

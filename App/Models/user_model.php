@@ -32,6 +32,45 @@ class user_model extends DataBase{
 		return self::query_fetch_all($sql);
 	}
 
+	public function finished_courses(){
+		$id = $this->id;
+		$arr = self::get_array("SELECT course_id FROM user_courses  where user_id = '$id' AND finished='1' ");
+		$temp = [];
+		foreach ($arr as $a) {
+			$temp[] = $a['course_id'];
+		}
+		$in = '('.implode(",",$temp).')';
+		if(!$temp){return [];}
+		$sql = "SELECT * from courses WHERE id in $in ";
+		return self::query_fetch_all($sql);
+	}
+
+	public function current_courses(){
+		$id = $this->id;
+		$arr = self::get_array("SELECT course_id FROM user_courses  where user_id = '$id' AND finished='0' ");
+		$temp = [];
+		foreach ($arr as $a) {
+			$temp[] = $a['course_id'];
+		}
+		$in = '('.implode(",",$temp).')';
+		if(!$temp){return [];}
+		$sql = "SELECT * from courses WHERE id in $in ";
+		return self::query_fetch_all($sql);
+	}
+
+	public function course_progress($course_id){
+		$user_id = $this->id;
+		$sql_1 = self::get_array("SELECT id FROM lesson  where course_id = '$course_id' ");
+		$temp = [];
+		foreach ($sql_1 as $a) {
+			$temp[] = $a['id'];
+		}
+		$in = '('.implode(",",$temp).')';
+		$sql_2 = "SELECT SUM(finished) FROM user_lesson where user_id = '$user_id' AND lesson_id in $in; ";
+		$query = self::get_one($sql_2);
+		return $query[0] / count($sql_1);
+	}
+
 	#check if lesson is watched
 	public function watched($id){
 		$user_id = $this->id;
