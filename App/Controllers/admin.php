@@ -1,12 +1,8 @@
 <?php
 
-require_once(app_path("Models/course_model.php"));
-require_once(app_path("Models/user_model.php"));
-require_once(app_path("Models/category_model.php"));
-
 class admin extends Controller{
 
-  // show every thing all users,all instructors,all courses,all categories
+  /*************************************** Index ***************************************/
   public function index(){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
     $count_courses = course_model::count();
@@ -22,7 +18,7 @@ class admin extends Controller{
     ]);
   }
 
-  /* show every thing section */
+  /*************************************** show all section ***************************************/
   public function all_users(){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
     $users = user_model::where(["type"=>0]);
@@ -49,7 +45,7 @@ class admin extends Controller{
 
 
 
-  /* instructor section */
+  /*************************************** instructor section ***************************************/
   public function create_instructor(){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
     $this->view("admin/create_instructor");
@@ -79,7 +75,7 @@ class admin extends Controller{
 
 
 
-  /* Courses sections */
+  /*************************************** courses section ***************************************/
   public function pend_course($course_id){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
     course_model::instructor_finish($course_id); // set finish = 1
@@ -104,7 +100,7 @@ class admin extends Controller{
 
 
 
-  /*Category section*/
+  /*************************************** category section ***************************************/
   public function store_category(){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
     $category = new category_model();

@@ -5,17 +5,22 @@ class DataBase{
 	public static $conn;
 	public static $class_name;
 	public static $table_name;
+	public static $fill;
 
-	public static function query_fetch_all($sql){
+	public static function query_fetch_all($sql,$class_name = 'none'){
+		if($class_name == 'none'){$class_name = static::$class_name;}
+
 		$stmt = self::$conn->prepare($sql);
 		$stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_CLASS, static::$class_name);
+		return $stmt->fetchAll(PDO::FETCH_CLASS, $class_name);
 	}
 
-	public static function query_fetch($sql){
+	public static function query_fetch($sql,$class_name = 'none'){
+		if($class_name == 'none'){$class_name = static::$class_name;}
+
 		$stmt = self::$conn->prepare($sql);
 		$stmt->execute();
-		$stmt = $stmt->fetchAll(PDO::FETCH_CLASS, static::$class_name);
+		$stmt = $stmt->fetchAll(PDO::FETCH_CLASS, $class_name);
 		return $stmt[0];
 	}
 

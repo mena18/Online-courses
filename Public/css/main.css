@@ -7,36 +7,6 @@ body {
 a:hover{
   text-decoration-line: none;
 }
-.navbar-custom {
-    background-color: black;
-}
-/* change the brand and text color */
-.navbar-custom .navbar-brand{
-  color:white;
-  font-size: 20px;
-  font-weight: bold;
-}
-.navbar-custom .navbar-text {
-    color: rgba(255,255,255,.8);
-}
-/* change the link color */
-.navbar-custom .navbar-nav .nav-link {
-    color: rgba(255,255,255,.5);
-}
-/* change the color of active or hovered links */
-.navbar-custom .nav-item.active .nav-link,
-.navbar-custom .nav-item:hover .nav-link {
-    color: #ffffff;
-}
-
-
-/* Home page styling */
-.image-1 , .image-2 , .image-3{
-  width:100%;
-    height: 30%;
-  object-fit: cover;
-}
-
 
 /* box card styling */
 .checked{
@@ -63,24 +33,6 @@ a:hover{
 	color:gray;
 }
 
-.card_text_container{
-  height: 100px;
-  overflow: hidden;
-}
-.card_text_container_profile{
-  height: 70px;
-  overflow: hidden;
-}
-.card_image{
-  height: 200px;
-  width: 100%;
-  display: block;
-}
-.card_image_profile{
-  height: 80%;
-  width: 100%;
-  display: block;
-}
 
 .check-box-marked{
   float:right;

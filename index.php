@@ -41,6 +41,13 @@ require_once(app_path('Core/App.php'));
 require_once(app_path('Core/Controller.php'));
 require_once(app_path('Core/DataBase.php'));
 require_once(app_path('Core/Mail.php'));
+
+require_once(app_path('models/category_model.php'));
+require_once(app_path('models/course_model.php'));
+require_once(app_path('models/lesson_model.php'));
+require_once(app_path('models/quiz_model.php'));
+require_once(app_path('models/user_model.php'));
+
 DataBase::$conn = $conn;
 
 

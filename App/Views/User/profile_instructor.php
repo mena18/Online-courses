@@ -12,9 +12,7 @@ require_once(app_path('views/header.php'));
 
 
     <div class='row'>
-    <?php
-    foreach ($data['courses'] as $course ) {
-    	?>
+    <?php foreach ($data['courses'] as $course ) { ?>
     	<div class="pt-5 col-sm-6 col-md-4 thumbnail">
     	  <a href="<?=url('course/details/')?><?= $course->id ?>"><img alt="100%x200" data-src="holder.js/100%x200" src="<?= public_path($course->image) ?>" style="height: 200px; width: 100%; display: block;"></a>
     	  <div class="caption">
@@ -35,11 +33,10 @@ require_once(app_path('views/header.php'));
     	 </div>
     	 </div>
 
-  <?php
-  }
-  echo "</div>";
+  <?php } ?>
+  </div>
 
 
 
 
-require_once(app_path('views/footer.php'));
+<?php require_once(app_path('views/footer.php'));

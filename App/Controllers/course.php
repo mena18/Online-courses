@@ -1,13 +1,8 @@
 <?php
 
-require_once(app_path('Models/course_model.php'));
-require_once(app_path('Models/lesson_model.php'));
-require_once(app_path('Models/user_model.php'));
-require_once(app_path('Models/category_model.php'));
-
 class course extends Controller{
 
-	/************************  User section  *******************/
+  /*************************************** User section ***************************************/
 
 	public function index(){
 		$courses = course_model::where(["finished"=>2]);
@@ -17,6 +12,7 @@ class course extends Controller{
 	// shows details for non register users
 	public function details($id){
 		$course = course_model::get($id);
+		if(!$course){redirect("course/index");}
 		$lessons = $course->lessons();
 		$instructor = $course->instructor();
 		$course_id = $course->id;
@@ -31,11 +27,8 @@ class course extends Controller{
 		$text = 'Register';
 		if($user_course){$text = 'Drop';}
 
-		if($course){
-			$this->view("courses/show2",['text'=>$text,'course'=>$course,"lessons"=>$lessons,"instructor"=>$instructor]);
-		}else{
-			redirect("course/index");
-		}
+
+		$this->view("courses/show2",['text'=>$text,'course'=>$course,"lessons"=>$lessons,"instructor"=>$instructor]);
 
 
 	}
@@ -73,7 +66,7 @@ class course extends Controller{
 		}
 
 		ksort($weeks);
-		$this->view("courses/show1",['course'=>$course,"user"=>$user,"weeks"=>$weeks,"instructor"=>$instructor]);
+		$this->view("course_dashboard/index",['course'=>$course,"user"=>$user,"weeks"=>$weeks,"instructor"=>$instructor]);
 
 	}
 
@@ -104,14 +97,22 @@ class course extends Controller{
 	}
 
 
-    /************************  instructor section  *******************/
+	public function week($course_id,$week_num){
+		if(!isset($_SESSION['user'])){redirect("user/loginview");}
+
+		$course = course_model::get($course_id);
+		$this->view("course_dashboard/week",['course'=>$course]);
+	}
+
+
+  /*************************************** instructor section ***************************************/
 
 
 	// create course
 	public function create(){
 		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("course/index");}
 		$category = category_model::get_all();
-		$this->view("courses/create",['category'=>$category]);
+		$this->view("instructor/create_course",['category'=>$category]);
 	}
 
 	//store course in database
@@ -145,7 +146,7 @@ class course extends Controller{
 			redirect("course/index");
 		}
 		$category = category_model::get_all();
-		$this->view("courses/edit",["category"=>$category,"course"=>$course]);
+		$this->view("instructor/edit_course",["category"=>$category,"course"=>$course]);
 	}
 
 	public function update($id){
@@ -182,7 +183,7 @@ class course extends Controller{
 			redirect("course/index");
 		}
 
-		course_model::delete($id);
+		$course->delete();
 		redirect("user/classroom");
 	}
 

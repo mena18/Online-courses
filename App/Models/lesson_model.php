@@ -57,7 +57,7 @@ class lesson_model extends DataBase{
 	public function course(){
 		$id = $this->course_id;
 		$sql = "SELECT * FROM courses WHERE id = '$id' ";
-		return self::query_fetch($sql);
+		return self::query_fetch($sql,'course_model');
 	}
 
 

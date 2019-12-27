@@ -12,12 +12,6 @@
 	<img style="width:50%;height: 50%;" src="<?= public_path($course->image)?>">
 </div>
 
-<h1>instructor</h1>
-<?php print_array($instructor); ?>
-
-
-<h1>Course</h1>
-<?php print_array($course); ?>
 
 <?php foreach ($data['lessons'] as $lesson) {  ?>
 		<a href="<?=url('lesson/show/')?><?=$lesson->id?>"><h1>Lesson <?= $lesson->week_number ?>.<?= $lesson->number ?> </h1></a>

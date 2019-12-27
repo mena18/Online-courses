@@ -1,12 +1,9 @@
 <?php
 
-
-require_once(app_path('Models/lesson_model.php'));
-require_once(app_path('Models/course_model.php'));
-require_once(app_path('Models/user_model.php'));
-
 class lesson extends Controller{
 
+
+	/*************************************** User section ***************************************/
 	public function show($id){
 		if(!isset($_SESSION['user'])){echo "you are not logged in";return ;}
 
@@ -38,8 +35,13 @@ class lesson extends Controller{
 		if(!$var){echo "you don't take this course";return ;}
 
 		lesson_model::toggle_watching($_SESSION['user']['id'],$id);
-		redirect("/lesson/show/".$lesson->id);
+		echo json_encode(["one"=>"two"]);
+		#redirect("/lesson/show/".$lesson->id);
 	}
+
+
+	/*************************************** Instructor section ***************************************/
+
 
 	// instructor create lesson
 	public function create($id){

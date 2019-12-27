@@ -29,7 +29,7 @@ class user_model extends DataBase{
 		}else if($this->type==1){
 			$sql = "SELECT * FROM courses WHERE instructor_id = " . $this->id;
 		}
-		return self::query_fetch_all($sql);
+		return self::query_fetch_all($sql,'course_model');
 	}
 
 	public function finished_courses(){
@@ -42,7 +42,7 @@ class user_model extends DataBase{
 		$in = '('.implode(",",$temp).')';
 		if(!$temp){return [];}
 		$sql = "SELECT * from courses WHERE id in $in ";
-		return self::query_fetch_all($sql);
+		return self::query_fetch_all($sql,'course_model');
 	}
 
 	public function current_courses(){
@@ -55,7 +55,7 @@ class user_model extends DataBase{
 		$in = '('.implode(",",$temp).')';
 		if(!$temp){return [];}
 		$sql = "SELECT * from courses WHERE id in $in ";
-		return self::query_fetch_all($sql);
+		return self::query_fetch_all($sql,'course_model');
 	}
 
 	public function course_progress($course_id){
@@ -66,6 +66,7 @@ class user_model extends DataBase{
 			$temp[] = $a['id'];
 		}
 		$in = '('.implode(",",$temp).')';
+		if(!$temp){return 0;}
 		$sql_2 = "SELECT SUM(finished) FROM user_lesson where user_id = '$user_id' AND lesson_id in $in; ";
 		$query = self::get_one($sql_2);
 		return $query[0] / count($sql_1);

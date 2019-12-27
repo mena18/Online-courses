@@ -1,58 +1,10 @@
 <?php
 
-require_once(app_path('Models/quiz_model.php'));
-require_once(app_path('Models/course_model.php'));
-
 class  Quiz  extends Controller{
 
-	public function create($course_id){
-		if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=1  ){echo "you are not allowed here";return;}
-		$course = course_model::get($course_id);
-		if($course->instructor_id!=$_SESSION['user']['id']){
-			echo "You aren't the instructor who created the course";return ;
-		}
-
-		$this->view("quiz/create",['course'=>$course]);
-	}
-
-	public function store($course_id){
-		if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=1  ){echo "you are not allowed here";return;}
-
-		$course = course_model::get($course_id);
-		if($course->instructor_id!=$_SESSION['user']['id']){
-			echo "You aren't the instructor who created the course";return ;
-		}
-
-		$Questions = json_decode($_POST['value'],true);
 
 
-		$quiz = new quiz_model();
-
-		$quiz->name = $_POST['name'];
-		$quiz->description = $_POST['description'];
-		$quiz->week_num = $_POST['week_num'];
-		$quiz->course_id = $course_id;
-		$quiz->total_marks = count($Questions);
-
-		$quiz->save();
-
-
-
-		$quiz_id = quiz_model::get_last();
-
-
-		$number=1;
-		foreach ($Questions as $Question) {
-			$q 			= 	$Question['p'];
-			$options 	=  	implode(',',$Question['options']);
-			$answers 	=  	implode(',',$Question['ans']);
-			$type 		=  	$Question['type'];
-			quiz_model::insert_question($q,$options,$answers,$type,$number++,$quiz_id);
-		}
-
-		return redirect("course/index");
-
-	}
+	/*************************************** User section ***************************************/
 
 	/* User taking quiz */
 	public function take($quiz_id){
@@ -103,6 +55,60 @@ class  Quiz  extends Controller{
 		return redirect("course/index");
 	}
 
+
+
+
+
+	/*************************************** Instructor section ***************************************/
+	public function create($course_id){
+		if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=1  ){echo "you are not allowed here";return;}
+		$course = course_model::get($course_id);
+		if($course->instructor_id!=$_SESSION['user']['id']){
+			echo "You aren't the instructor who created the course";return ;
+		}
+
+		$this->view("quiz/create",['course'=>$course]);
+	}
+
+	public function store($course_id){
+		if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=1  ){echo "you are not allowed here";return;}
+
+		$course = course_model::get($course_id);
+		if($course->instructor_id!=$_SESSION['user']['id']){
+			echo "You aren't the instructor who created the course";return ;
+		}
+
+		$Questions = json_decode($_POST['value'],true);
+
+
+		$quiz = new quiz_model();
+
+		$quiz->name = $_POST['name'];
+		$quiz->description = $_POST['description'];
+		$quiz->week_num = $_POST['week_num'];
+		$quiz->course_id = $course_id;
+		$quiz->total_marks = count($Questions);
+
+		$quiz->save();
+
+
+
+		$quiz_id = quiz_model::get_last();
+
+
+		$number=1;
+		foreach ($Questions as $Question) {
+			$q 			= 	$Question['p'];
+			$options 	=  	implode(',',$Question['options']);
+			$answers 	=  	implode(',',$Question['ans']);
+			$type 		=  	$Question['type'];
+			quiz_model::insert_question($q,$options,$answers,$type,$number++,$quiz_id);
+		}
+
+		return redirect("course/index");
+
+	}
+
 	public function delete($quiz_id){
 		if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=0  ){echo "you are not allowed here";return;}
 
@@ -118,6 +124,9 @@ class  Quiz  extends Controller{
 		redirect("courses/index");
 
 	}
+
+
+
 
 
 

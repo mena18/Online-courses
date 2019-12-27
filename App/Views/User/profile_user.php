@@ -26,7 +26,6 @@
 	<div class='row'>
 
 		<?php foreach ($data['finished_courses'] as $course ) { ?>
-
 		<div class="pt-5 col-sm-6 col-md-4 thumbnail">
 			<a href="<?=url('course/show/')?><?= $course->id ?>"><img alt="100%x200" data-src="holder.js/100%x200" src="<?= public_path($course->image) ?>" style="height: 200px; width: 100%; display: block;"></a>
 			<div class="caption">

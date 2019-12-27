@@ -41,25 +41,25 @@ class course_model extends DataBase {
 	public function instructor(){
 		$id = $this->instructor_id;
 		$sql = "SELECT * from user where id='$id' ";
-		return self::query_fetch($sql);
+		return self::query_fetch($sql,'user_model');
 	}
 
 	public function lessons(){
 		$id = $this->id;
 		$sql = "SELECT * from lesson where course_id='$id' ORDER BY number";
-		return self::query_fetch_all($sql);
+		return self::query_fetch_all($sql,'lesson_model');
 	}
 
 	public function quizzes(){
 		$id = $this->id;
 		$sql = "SELECT * FROM quiz WHERE course_id = '$id' ;";
-		return self::query_fetch_all($sql);
+		return self::query_fetch_all($sql,'quiz_model');
 	}
 
 	public function assignments(){
 		$id = $this->id;
 		$sql = "SELECT * FROM assignment WHERE course_id = '$id' ;";
-		return self::query_fetch_all($sql);
+		return self::query_fetch_all($sql,'assignment_model');
 	}
 
 

@@ -9,6 +9,7 @@
 
 <body>
 
+<?php $category = category_model::get_all(); ?>
 
 <nav class="navbar navbar-expand-md navbar-custom shadow-sm ">
     <div class="pr-5 pl-5 pb-1 pt-1" style="width:100%;margin:auto;">
@@ -28,9 +29,10 @@
                   Explore
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
+                  <?php foreach ($category as $cat) { ?>
+                    <a class="dropdown-item" href="#"><?=$cat->name?></a>
+                  <?php } ?>
+
                 </div>
               </li>
 

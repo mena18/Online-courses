@@ -11,9 +11,7 @@
   <h2 style="font-style: italic;"><?=$data['course']->name?></h2>
 </div>
 
-<?php
 
-?>
 <div class="row pl-5 pr-5">
 
   <div class="col-8">
@@ -66,6 +64,7 @@
 
 
       <?php }
+
       $finished = $user->course_progress($data['course']->id);
       if($finished==1){ ?>
           <a href="<?=url('course/user_finish/'.$data['course']->id)?>" class="btn btn-primary mt-5 mb-5">Finish course</a>

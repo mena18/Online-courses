@@ -1,8 +1,5 @@
 <?php
 
-require_once(app_path("models/user_model.php"));
-require_once(app_path("models/course_model.php"));
-
 class User extends Controller{
 
 	public function create(){
@@ -53,7 +50,7 @@ class User extends Controller{
 		$user = user_model::get( $_SESSION['user']['id']);
 		if($_SESSION['user']['type']==1){
 			$courses = $user->courses();
-			$this->view("user/profile_instructor",["courses"=>$courses]);
+			$this->view("instructor/index",["courses"=>$courses]);
 		}else{
 			$finished_courses = $user->finished_courses();
 			$current_courses = $user->current_courses();
