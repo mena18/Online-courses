@@ -71,6 +71,13 @@ class lesson_model extends DataBase{
 	}
 
 
+	public function users(){
+		$sql = "SELECT user_lesson.*,user.* FROM user_lesson INNER JOIN user on user.id=user_lesson.user_id
+		INNER JOIN lesson on lesson.id = user_lesson.lesson_id where lesson.id = '$this->id'";
+		return self::query_fetch_all($sql,'user_model');
+	}
+
+
 
 
 }

@@ -39,18 +39,30 @@ class course_model extends DataBase {
 	}
 
 	public function lessons(){
-		$sql = "SELECT * from lesson where course_id='$this->id' ORDER BY id";
+		$sql = "SELECT * from lesson where course_id='$this->id' ORDER BY week_number,id";
 		return self::query_fetch_all($sql,'lesson_model');
 	}
 
 	public function quizzes(){
-		$sql = "SELECT * FROM quiz WHERE course_id = '$this->id' ;";
+		$sql = "SELECT * FROM quiz WHERE course_id = '$this->id'  ORDER BY week_num,id ;";
 		return self::query_fetch_all($sql,'quiz_model');
 	}
 
 	public function assignments(){
-		$sql = "SELECT * FROM assignment WHERE course_id = '$this->id' ;";
+		$sql = "SELECT * FROM assignment WHERE course_id = '$this->id'  ORDER BY week_num,id ;";
 		return self::query_fetch_all($sql,'assignment_model');
+	}
+
+	public function unseen_messages(){
+		$sql = "SELECT messages.*,user.name FROM messages INNER JOIN user on messages.user_id=user.id
+		where messages.course_id = '$this->id' AND archived = '0' ";
+		return self::query_fetch_all($sql,'messages_model');
+	}
+
+	public function seen_messages(){
+		$sql = "SELECT messages.*,user.name FROM messages INNER JOIN user on messages.user_id=user.id
+		where messages.course_id = '$this->id' AND archived = '1' ";
+		return self::query_fetch_all($sql,'messages_model');
 	}
 
 	public function total_marks(){

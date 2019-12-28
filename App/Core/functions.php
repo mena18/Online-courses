@@ -13,7 +13,7 @@ function islogedin(){
 }
 
 function upload_file($name){
-	if(!$_FILES['image']['name']){return "";}
+	if(!$_FILES[$name]['name']){return "";}
 	$img=$_FILES[$name];
 	$extention = explode('.', $img['name'])[1];
 	$img_name = "uploads/".uniqid('',true) .".". $extention;

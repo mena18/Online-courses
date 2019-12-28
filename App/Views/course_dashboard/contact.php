@@ -43,7 +43,7 @@ $counter=1;
            <th scope="row"><?=$counter++?></th>
            <td><?=$message->title?></td>
            <td><?=$message->body?></td>
-           <td><?=$message->response?></td>
+           <td><?=$message->responde?></td>
          </tr>
        <?php endforeach; ?>
 

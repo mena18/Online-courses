@@ -1,3 +1,11 @@
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- footer
 <footer>
   <div class="container-fluid">

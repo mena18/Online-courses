@@ -129,4 +129,10 @@ class lesson extends Controller{
 		$this->view("instructor/lessons/show_all",['course'=>$course]);
 	}
 
+	public function show_all_users($lesson_id){
+		$lesson = lesson_model::get($lesson_id);
+		$this->view("instructor/lessons/show_users",['lesson'=>$lesson]);
+
+	}
+
 }

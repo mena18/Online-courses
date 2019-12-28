@@ -21,7 +21,7 @@ $files = $data['files'];
           <th scope="row"><?=$counter++?></th>
           <td><?=$file->name?></td>
           <td><?=$file->week_num?></td>
-          <td><?=$file->path?></td>
+          <td><a href="<?=$file->path?>" download><span style="font-size:25px;" class="fa fa-download"></span></a></td>
         </tr>
       <?php endforeach; ?>
 

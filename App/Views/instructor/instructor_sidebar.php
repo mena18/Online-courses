@@ -10,7 +10,8 @@
         <div class="col-xl-2 col-lg-3 col-md-4 sidebar fixed-top">
           <a href="<?= url('course/index'); ?>" class="navbar-brand text-white d-block mx-auto text-center py-3 mb-4 bottom-border">Online Courses</a>
           <div class="bottom-border pb-3">
-            <img src="<?=public_path('images/admin.jpeg')?>" width="50" class="rounded-circle mr-3">
+            
+            <img src="<?=public_path($_SESSION['user']['image'])?>" width="50" class="rounded-circle mr-3">
             <span class="text-white"><?= $_SESSION['user']['name'] ?></span>
           </div>
           <ul class="navbar-nav flex-column mt-4">
@@ -23,6 +24,9 @@
             <li class="nav-item"><a href="<?=url('quiz/show_all/'.$course->id)?>" class="nav-link text-white p-3  sidebar-link"><i class="fas fa-table text-light fa-lg mr-3"></i>Quizzes</a></li>
             <li class="nav-item"><a href="<?=url('messages/instructor_inbox/'.$course->id)?>" class="nav-link text-white p-3  sidebar-link"><i class="fas fa-envelope text-light fa-lg mr-3"></i>Inbox</a></li>
             <li class="nav-item"><a href="<?=url('course/course_info/'.$course->id)?>" class="nav-link text-white p-3  sidebar-link"><i class="fas fa-table text-light fa-lg mr-3"></i>info</a></li>
+            <li class="nav-item"><a href="<?=url('resourses/instructor_resourses/'.$course->id)?>" class="nav-link text-white p-3  sidebar-link"><i class="fas fa-table text-light fa-lg mr-3"></i>Resourses</a></li>
+
+
           <?php } ?>
           </ul>
         </div>

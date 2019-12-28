@@ -3,7 +3,7 @@ require_once(app_path("views/course_dashboard/header.php"));
 require_once(app_path("views/course_dashboard/sidebar.php"));
 $assignment = $data['assignment'];
 $d = new DateTime($assignment->dead_line);
-
+$user = user_model::get($_SESSION['user']['id']);
 ?>
 
 <div class="jumbotron">
@@ -19,17 +19,18 @@ $d = new DateTime($assignment->dead_line);
 
   <div style="text-align:center">
 
-
+    <?php $path = $user->user_assignment($assignment->id) ?>
+    <?php if($path){ ?>
     <div class="pb-5">
-      <a href="#">
+      <a href="<?=public_path($path)?>" download>
         check previous sumbition
         <span style="font-size:25px;" class="fa fa-download"></span>
       </a>
     </div>
+  <?php } ?>
 
-
-    <form action="/courses/assignment/update_submit/<?=$assignment->id?>" method="POST">
-      <input type="file"  name="file" id="docpicker"  accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+    <form action="<?=url('assignment/submit/'.$assignment->id)?>" method="POST" enctype="multipart/form-data">
+      <input type="file"  name="assignment" id="docpicker" >
       <button class="btn btn-success" >Submit</button>
     </form>
 

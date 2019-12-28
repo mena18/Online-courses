@@ -94,6 +94,12 @@ class user_model extends DataBase{
 		return $ans[0];
 	}
 
+	public function user_assignment($assignment_id){
+		$sql = "SELECT path FROM user_assignment WHERE user_id = '$this->id'  AND assignment_id = '$assignment_id'; ";
+		$ans = self::get_one($sql);
+		return $ans[0];
+	}
+
 	#check if user take quiz or not
 	public function finished_quiz($id){
 		$user_id = $this->id;
@@ -105,7 +111,7 @@ class user_model extends DataBase{
 	public function finished_assignment($id){
 		$sql = "SELECT marks FROM user_assignment WHERE user_id = '$this->id'  AND assignment_id = '$id' ";
 		return self::get_one($sql)[0];
-		
+
 	}
 
 

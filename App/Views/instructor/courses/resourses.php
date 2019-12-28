@@ -4,8 +4,7 @@ $course = $data['course'];
 require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
 
 
-<h1>resourses</h1>
 
-
+resourses
 
 <?php require_once(app_path("views/instructor/instructor_footer.php")); ?>

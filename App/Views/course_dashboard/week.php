@@ -62,7 +62,7 @@ $user = $data['user'];
 <script>
 
 
-var cur = 0,tabcontent,tablinks;
+var cur = <?=$data['lesson_num']-1?>,tabcontent,tablinks;
 var links = [
   <?php  foreach ($lessons as $lesson) {
     echo "'https://www.youtube.com/embed/" . $lesson->video_id . "',";

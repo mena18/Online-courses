@@ -1,6 +1,8 @@
 <?php
 require_once(app_path("views/instructor/instructor_header.php"));
-$course = $data['course'];$counter=1;
+$quiz = $data['quiz'];
+$course = $quiz->course();
+$counter=1;
 require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
 
 <div class="container">
@@ -11,23 +13,18 @@ require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
     <tr class="text-muted">
       <th>#</th>
       <th>Name</th>
-      <th>Description</th>
-      <th>Week</th>
-      <th>Total marks</th>
-      <th>Options</th>
+      <th>Finished at </th>
+      <th>Marks </th>
     </tr>
   </thead>
   <tbody>
-  <?php foreach ($course->quizzes() as $quiz) { ?>
+    
+  <?php foreach ($quiz->users() as $user) { ?>
     <tr>
       <th><?=$counter++?></th>
-      <td><?= $quiz->name ?></td>
-      <td><?= $quiz->description ?></td>
-      <td><?= $quiz->week_num ?></td>
-      <td><?= $quiz->total_marks ?></td>
-      <td>
-        <a href="<?=url('quiz/show_all_users/'.$quiz->id)?>" class="btn btn-primary mr-3">Show</a>
-      </td>
+      <td><?= $user->name ?></td>
+      <td><?= $user->finished_at ?></td>
+      <td><?= $user->marks ?></td>
     </tr>
   <?php   } ?>
 
@@ -35,7 +32,6 @@ require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
 </table>
 
 </div>
-
 
 
 <?php require_once(app_path("views/instructor/instructor_footer.php")); ?>

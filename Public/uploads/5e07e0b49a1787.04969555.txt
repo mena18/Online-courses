@@ -1,0 +1,67 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javaapplication2;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+
+class DataBase{
+    public Connection con;
+    public Statement st;
+    public ResultSet res;
+    
+    DataBase(){
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        
+        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/courses","root","");
+        st = con.createStatement();
+        
+        
+        }catch(Exception e){
+            System.out.println(e);
+
+        }
+    }
+    public ArrayList<String> get_data(String query){
+        ArrayList<String> list= new ArrayList<String>();
+        try{
+        res = st.executeQuery(query);
+        
+        while(res.next()){
+            list.add(res.getString("name"));
+        }
+        
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return list;
+    }
+    
+    public void query(String q){
+        try{
+        res = st.executeQuery(q);
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+}
+
+public class JavaApplication2 {
+
+    
+    
+    public static void main(String[] args) {
+      DataBase d = new DataBase();
+      ArrayList<String> arr = d.get_data("SELECT * FROM courses");
+      for(int i=0;i<arr.size();i++){
+          System.out.println(arr.get(i));
+      }
+    }
+    
+}

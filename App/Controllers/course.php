@@ -71,13 +71,13 @@ class course extends Controller{
 	}
 
 
-	public function week($course_id,$week_num){
+	public function week($course_id,$week_num,$lesson_num=1){
 		if(!isset($_SESSION['user'])){redirect("user/loginview");}
 
 		$lessons = lesson_model::lessons_in_week($course_id,$week_num);
 		$user = user_model::get($_SESSION['user']['id']);
 		$course = course_model::get($course_id);
-		$this->view("course_dashboard/week",['user'=>$user,'course'=>$course,"lessons"=>$lessons]);
+		$this->view("course_dashboard/week",['user'=>$user,'course'=>$course,"lessons"=>$lessons,"lesson_num"=>$lesson_num]);
 	}
 
 

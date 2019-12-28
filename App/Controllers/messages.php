@@ -7,4 +7,15 @@ class  messages  extends Controller{
     $this->view("instructor/contact",['course'=>$course]);
   }
 
+  public function responde($message_id){
+
+    $message = messages_model::get($message_id);
+    $message->archived=1;
+    $message->responde=$_POST['responde'];
+    $message->update();
+
+
+    redirect("messages/instructor_inbox/".$message->course_id);
+  }
+
 }

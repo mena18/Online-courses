@@ -8,6 +8,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="<?=public_path('css/admin_style.css')?>">
+    
     <title>Admin Dashboard</title>
   </head>
   <body>
@@ -87,3 +88,12 @@
       </div>
     </div>
     <!-- end of modal -->
+
+
+
+    <section>
+      <div class="container-fluid">
+        <div class="row mb-5">
+          <div class="col-xl-10  ml-auto mt-5">
+            <div class="row align-items-center">
+              <div class="col-xl-12 pr-5 pl-5">

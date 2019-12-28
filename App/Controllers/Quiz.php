@@ -131,9 +131,9 @@ class  Quiz  extends Controller{
 		$this->view("instructor/quizzes/show_all",['course'=>$course]);
 	}
 
-	public function quiz_grade(){
-		$course = course_model::get($course_id);
-		$this->view("instructor/quizzes/grades",['course'=>$course]);
+	public function show_all_users($quiz_id){
+		$quiz = quiz_model::get($quiz_id);
+		$this->view("instructor/quizzes/show_users",['quiz'=>$quiz]);
 	}
 
 

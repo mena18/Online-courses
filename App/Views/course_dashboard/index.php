@@ -79,13 +79,13 @@ $course_total_marks = $course->total_marks();
 
          <div id="id_<?=$week_num?>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 
-
+           <?php $counter=1 ?>
            <?php foreach ($week as $ob) { ?>
 
 
              <?php if($ob['type']=='lesson'){ $lesson = $ob['content']; ?>
                <div class="card-body">
-                 <a href="<?=url('lesson/show/')?><?=$lesson->id?>"><span class="fa fa-youtube-play"></span> <span class="black hover_red"><?=$lesson->name?></span></a>
+                 <a href="<?=url('course/week/'.$course->id.'/'.$week_num.'/'.$counter++)?>"><span class="fa fa-youtube-play"></span> <span class="black hover_red"><?=$lesson->name?></span></a>
                  <?php if($user->watched($lesson->id)){ ?>
                   <span class="check-box-marked fa fa-check-square-o"></span>
                  <?php }else{ ?>
@@ -125,6 +125,7 @@ $course_total_marks = $course->total_marks();
 
      </div>
    </div>
+ </div>
 
 
 <?php require_once(app_path("views/course_dashboard/footer.php"));
