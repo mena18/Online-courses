@@ -47,7 +47,7 @@ class lesson extends Controller{
 	public function create($id){
 		$course = course_model::get($id);
 
-		$this->view("lessons/create",["course"=>$course]);
+		$this->view("instructor/lessons/create",["course"=>$course]);
 	}
 
 	public function store($id){
@@ -83,7 +83,7 @@ class lesson extends Controller{
 		$lesson = lesson_model::get($id);
 		$course = course_model::get($lesson->course_id);
 
-		$this->view("lessons/edit",["lesson"=>$lesson]);
+		$this->view("instructor/lessons/edit",["lesson"=>$lesson]);
 	}
 
 	public function update($id){
@@ -123,4 +123,10 @@ class lesson extends Controller{
 
 		redirect("user/classroom");
 	}
+
+	public function show_all($course_id){
+		$course = course_model::get($course_id);
+		$this->view("instructor/lessons/show_all",['course'=>$course]);
+	}
+
 }

@@ -1,4 +1,8 @@
-<?php require_once(app_path("views/instructor/instructor_header.php")); $course = $data['course']; ?>
+<?php
+require_once(app_path("views/instructor/instructor_header.php"));
+$course = $data['course'];
+require_once(app_path("views/instructor/instructor_sidebar.php"));?>
+
 
 
 

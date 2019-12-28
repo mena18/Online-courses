@@ -1,5 +1,8 @@
-
-<?php require_once(app_path("views/instructor/header_footer.php")); $course_id = $data['course']->id; ?>
+<?php
+require_once(app_path("views/instructor/instructor_header.php"));
+$course = $data['course'];
+require_once(app_path("views/instructor/instructor_sidebar.php"));
+$course_id = $course->id; ?>
 
 <style type="text/css">
     p{

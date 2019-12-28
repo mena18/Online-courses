@@ -1,4 +1,9 @@
-<?php require_once(app_path("views/instructor/instructor_header.php"));  $lesson = $data['lesson']; ?>
+<?php
+require_once(app_path("views/instructor/instructor_header.php"));
+$lesson = $data['lesson'];
+$course = $lesson->course();
+require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
+
 
 
 <div class="container pb-5">

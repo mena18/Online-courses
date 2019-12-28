@@ -24,6 +24,11 @@ class lesson_model extends DataBase{
 		return $lessons;
 	}
 
+	public static function lessons_in_week($course_id,$week_num){
+		$sql = "SELECT * FROM lesson where course_id = '$course_id' AND week_number = '$week_num' ORDER BY id ";
+		return self::query_fetch_all($sql);
+	}
+
 
 
 	public function check_user_registration($user_id,$course_id){ // check if user taking this course
@@ -59,6 +64,13 @@ class lesson_model extends DataBase{
 		$sql = "SELECT * FROM courses WHERE id = '$id' ";
 		return self::query_fetch($sql,'course_model');
 	}
+
+	public function week_lessons(){
+		$sql = "SELECT * FROM lessons where course_id = '$this->course_id' AND week_number = '$this->week_number' ORDER BY id ";
+		return self::query_fetch_all($sql);
+	}
+
+
 
 
 }

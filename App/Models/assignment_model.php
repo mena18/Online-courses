@@ -9,5 +9,11 @@ class assignment_model extends DataBase {
 
 
 
+  public function courses(){
+    $sql = "SELECT * FROM courses WHERE id = '$this->course_id' ;";
+    return self::query_fetch($sql,"course_model");
+  }
+
+
 
 }

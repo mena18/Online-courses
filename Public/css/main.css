@@ -8,6 +8,32 @@ a:hover{
   text-decoration-line: none;
 }
 
+/*Navbar cusom*/
+.navbar-custom {
+    background-color: black;
+}
+/* change the brand and text color */
+.navbar-custom .navbar-brand{
+  color:white;
+  font-size: 20px;
+  font-weight: bold;
+}
+.navbar-custom .navbar-text {
+    color: rgba(255,255,255,.8);
+}
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5);
+}
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}
+
+
+
+
 /* box card styling */
 .checked{
   color:orange;

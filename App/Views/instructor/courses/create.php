@@ -1,4 +1,5 @@
 <?php require_once(app_path("views/instructor/instructor_header.php")); ?>
+<?php require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
 
 <div class="container">
     <h1 class="pb-3">Create New Course</h1>

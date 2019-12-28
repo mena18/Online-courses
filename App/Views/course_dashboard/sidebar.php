@@ -14,30 +14,22 @@
         <li>
             <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Weeks</a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
+              <?php for($i=1;$i<=$course->duration_weeks;$i++){ ?>
                 <li>
-                    <a href="#">Week 1</a>
+                    <a href="<?=url("course/week/".$course->id.'/'.$i)?>">Week <?=$i?></a>
                 </li>
-                <li>
-                    <a href="#">Week 2</a>
-                </li>
-                <li>
-                    <a href="#">Week 3</a>
-                </li>
+              <?php }?>
             </ul>
         </li>
 
         <li>
             <a href="#assginment" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Assignments</a>
             <ul class="collapse list-unstyled" id="assginment">
-                <li>
-                    <a href="#">Assignment 1</a>
-                </li>
-                <li>
-                    <a href="#">Assignment 2</a>
-                </li>
-                <li>
-                    <a href="#">Assignment 3</a>
-                </li>
+                <?php foreach ($course->assignments() as $assignment) { ?>
+                  <li>
+                      <a href="<?=url("assignment/show/".$assignment->id)?>"><?=$assignment->name?></a>
+                  </li>
+                <?php } ?>
             </ul>
         </li>
 
@@ -45,22 +37,21 @@
         <li>
             <a href="#quizzes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Quizzes</a>
             <ul class="collapse list-unstyled" id="quizzes">
+              <?php foreach ($course->quizzes() as $quiz) { ?>
                 <li>
-                    <a href="#">Quiz 1</a>
+                    <a href="<?=url('quiz/take/'.$quiz->id)?>"><?=$quiz->name?></a>
                 </li>
-                <li>
-                    <a href="#">Quiz 2</a>
-                </li>
-                <li>
-                    <a href="#">Quiz 3</a>
-                </li>
+              <?php } ?>
             </ul>
         </li>
         <li>
-            <a href="#">Contact</a>
+            <a href="<?=url("course/contact_instructor/".$course->id)?>">Contact</a>
         </li>
         <li>
-            <a href="#">Course info</a>
+            <a href="<?=url("course/info/".$course->id)?>" >Course info</a>
+        </li>
+        <li>
+            <a href="<?=url("course/resourses/".$course->id)?>" >Course resourses</a>
         </li>
     </ul>
 

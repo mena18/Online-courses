@@ -72,6 +72,20 @@ class user_model extends DataBase{
 		return $query[0] / count($sql_1);
 	}
 
+	public function course_marks($course_id){
+		$user_id = $this->id;
+		$sql_1 = self::get_array("SELECT id FROM quiz  where course_id = '$course_id' ");
+		$temp = [];
+		foreach ($sql_1 as $a) {
+			$temp[] = $a['id'];
+		}
+		$in = '('.implode(",",$temp).')';
+		if(!$temp){return 0;}
+		$sql_2 = "SELECT SUM(marks) FROM user_quiz where user_id = '$user_id' AND quiz_id in $in; ";
+		return self::get_one($sql_2)[0];
+
+	}
+
 	#check if lesson is watched
 	public function watched($id){
 		$user_id = $this->id;
@@ -86,6 +100,12 @@ class user_model extends DataBase{
 		$sql = "SELECT marks FROM user_quiz WHERE user_id = '$user_id'  AND quiz_id = '$id' ";
 		$ans = self::get_one($sql);
 		return $ans[0];
+	}
+
+	public function finished_assignment($id){
+		$sql = "SELECT marks FROM user_assignment WHERE user_id = '$this->id'  AND assignment_id = '$id' ";
+		return self::get_one($sql)[0];
+		
 	}
 
 

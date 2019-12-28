@@ -36,37 +36,11 @@ class course extends Controller{
 	// show course details for register users
 	public function show($id){
 		$course = course_model::get($id);
+		if(!$course){redirect("course/index");}
 		$user = user_model::get($_SESSION['user']['id']);
 
-		$instructor = $course->instructor();
-		$course_id = $course->id;
-		$user_id = $user->id;
 
-		if(!$course){redirect("course/index");}
-
-
-		/*
-		$lessons = course_model::query_fetch_all("
-			SELECT lesson.*,T.finished FROM lesson LEFT JOIN
-			(SELECT user_lesson.finished,user_lesson.lesson_id,user.id
-			FROM user_lesson INNER join user on user.id = user_lesson.user_id WHERE user.id = $user_id ) AS T
-			on T.lesson_id = lesson.id WHERE lesson.course_id = $course_id ORDER BY lesson.number;  ");
-*/
-
-	$lessons = $course->lessons();
-	$quizzes = $course->quizzes();
-
-
-		$weeks = [];
-		foreach ($lessons as $less) {
-			$weeks[$less->week_number][] = ["type"=>"lesson","content"=>$less];
-		}
-		foreach ($quizzes as $quiz) {
-			$weeks[$quiz->week_num][] = ["type"=>"quiz","content"=>$quiz];
-		}
-
-		ksort($weeks);
-		$this->view("course_dashboard/index",['course'=>$course,"user"=>$user,"weeks"=>$weeks,"instructor"=>$instructor]);
+		$this->view("course_dashboard/index",['course'=>$course,"user"=>$user]);
 
 	}
 
@@ -100,8 +74,43 @@ class course extends Controller{
 	public function week($course_id,$week_num){
 		if(!isset($_SESSION['user'])){redirect("user/loginview");}
 
+		$lessons = lesson_model::lessons_in_week($course_id,$week_num);
+		$user = user_model::get($_SESSION['user']['id']);
 		$course = course_model::get($course_id);
-		$this->view("course_dashboard/week",['course'=>$course]);
+		$this->view("course_dashboard/week",['user'=>$user,'course'=>$course,"lessons"=>$lessons]);
+	}
+
+
+	public function info($course_id){
+		$course = course_model::get($course_id);
+		$this->view("course_dashboard/info",["course"=>$course]);
+	}
+	public function contact_instructor($course_id){
+		$course = course_model::get($course_id);
+		$messages = messages_model::where(["user_id"=>$_SESSION['user']['id'],"course_id"=>$course_id]);
+		$this->view("course_dashboard/contact",["course"=>$course,"messages"=>$messages]);
+
+	}
+
+	public function contact_save($course_id){
+		$message = new messages_model();
+		$message->title = $_POST['title'];
+		$message->body = $_POST['body'];
+		$message->course_id = $course_id;
+		$message->user_id = $_SESSION['user']['id'];
+
+		$message->save();
+
+		print_array($message);
+
+		redirect("course_dashboard/index");
+
+	}
+
+	public function resourses($course_id){
+		$course = course_model::get($course_id);
+		$files = resourses_model::where(["course_id"=>$course_id]);
+		$this->view("course_dashboard/resourses",["course"=>$course,"files"=>$files]);
 	}
 
 
@@ -112,7 +121,7 @@ class course extends Controller{
 	public function create(){
 		if(!isset($_SESSION['user'])||$_SESSION['user']['type']!=1){redirect("course/index");}
 		$category = category_model::get_all();
-		$this->view("instructor/create_course",['category'=>$category]);
+		$this->view("instructor/courses/create",['category'=>$category]);
 	}
 
 	//store course in database
@@ -146,7 +155,7 @@ class course extends Controller{
 			redirect("course/index");
 		}
 		$category = category_model::get_all();
-		$this->view("instructor/edit_course",["category"=>$category,"course"=>$course]);
+		$this->view("instructor/courses/edit",["category"=>$category,"course"=>$course]);
 	}
 
 	public function update($id){
@@ -212,6 +221,17 @@ class course extends Controller{
 
 		redirect("user/classroom");
 
+	}
+
+	public function course_info($course_id){
+		$course = course_model::get($course_id);
+		$this->view("instructor/courses/info",['course'=>$course]);
+	}
+
+	// show the course details for instructor
+	public function instructor_show($course_id){
+		$course = course_model::get($course_id);
+		$this->view("instructor/courses/index",['course'=>$course]);
 	}
 
 	public function crr($n=1){

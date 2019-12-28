@@ -24,7 +24,7 @@ class  Quiz  extends Controller{
 
 		//print_array($Questions);
 
-		$this->view("quiz/take",['quiz'=>$quiz,'questions'=>$Questions]);
+		$this->view("course_dashboard/quiz",['course'=>$course,'quiz'=>$quiz,'questions'=>$Questions]);
 	}
 
 	/* User submiting Quiz */
@@ -67,7 +67,7 @@ class  Quiz  extends Controller{
 			echo "You aren't the instructor who created the course";return ;
 		}
 
-		$this->view("quiz/create",['course'=>$course]);
+		$this->view("instructor/quizzes/create",['course'=>$course]);
 	}
 
 	public function store($course_id){
@@ -125,6 +125,16 @@ class  Quiz  extends Controller{
 
 	}
 
+
+	public function show_all($course_id){
+		$course = course_model::get($course_id);
+		$this->view("instructor/quizzes/show_all",['course'=>$course]);
+	}
+
+	public function quiz_grade(){
+		$course = course_model::get($course_id);
+		$this->view("instructor/quizzes/grades",['course'=>$course]);
+	}
 
 
 
