@@ -30,7 +30,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <?php foreach ($category as $cat) { ?>
-                    <a class="dropdown-item" href="#"><?=$cat->name?></a>
+                    <a class="dropdown-item" href="<?=url("course/index/".$cat->id)?>"><?=$cat->name?></a>
                   <?php } ?>
 
                 </div>

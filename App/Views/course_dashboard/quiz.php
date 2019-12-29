@@ -5,18 +5,26 @@ $quiz = $data['quiz'];
 $questions = $data['questions'];
 $counter=0;
  ?>
-
+<style>
+.form-group{
+  background-color: white;
+  padding:10px;
+  margin-bottom: 30px;
+  border-style: groove;
+  border-radius: 5px;
+}
+</style>
 
 
 
 
 
  <div class="container">
-
+  <h1><?=$quiz->name?></h1>
  	<form action="<?=url('quiz/submit/')?><?=$quiz->id?>" method="POST">
  		<?php foreach ($questions as $question) { ?>
  			<div class='form-group'>
- 				<h1><?=++$counter?><?=$question['question']?>  </h1>
+ 				<h2 class="pb-3"><?=++$counter?><?=$question['question']?>  </h2>
 
  				<?php $options = explode(',', $question['options']);
 
@@ -34,7 +42,7 @@ $counter=0;
 
  			</div>
  		<?php } ?>
- 		<div class="form-group">
+ 		<div>
  			<input type="submit" class="btn btn-success">
  		</div>
 

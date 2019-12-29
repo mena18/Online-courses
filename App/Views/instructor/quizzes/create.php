@@ -8,6 +8,14 @@ $course_id = $course->id; ?>
     p{
         font-size: 30px;
     }
+    .form-group{
+      background-color: white;
+      padding:10px;
+      margin-bottom: 10px;
+      border-style: groove;
+      border-radius: 5px;
+    }
+
 </style>
 
 
@@ -16,7 +24,7 @@ $course_id = $course->id; ?>
 
 <h3>Create New Quiz</h3>
 
-    <form id="form" action="<?=url('quiz/store/'.$course_id)?>" method="POST">
+    <form id="quiz_form" action="<?=url('quiz/store/'.$course_id)?>" method="POST">
 
         <div class="pb-5">
           <label for="name">Quiz Name</label>
@@ -38,7 +46,8 @@ $course_id = $course->id; ?>
 
 
     <div class="pt-2">
-        <button class="float-right btn btn-primary " onclick="add()">Add new Question</button>
+        <button class="float-right btn btn-primary " onclick="add_with_radio_buttons()">Add new Question (one option)</button>
+        <button class="float-right btn btn-primary mr-5" onclick="add_with_check_buttons()">Add new Question (multible options) </button>
     </div>
 
     <br><br><br>
@@ -46,6 +55,7 @@ $course_id = $course->id; ?>
     <div class="text-center mb-5">
         <button class="w-25 btn btn-success align-center" onclick="save()"> SAVE </button>
     </div>
+
 
 
 

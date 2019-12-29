@@ -1,69 +1,71 @@
 var n=1;
 
 
-function add(){
 
-    var question_n = prompt("Enter number of question");
-    var type = prompt("Enter 1 for radio 2 for check");
+function add_with_radio_buttons(){
+    var form = $("#quiz_form");
+    var Great_div = $("<div class='form-group'></div>");
+    var p = $("<p contenteditable='true'>Q)Click to change text</p>");
 
-    if(type==1){
-        add_with_radio_buttons(question_n);
-    }else{
-        add_with_check_buttons(question_n);
-    }
+    Great_div.append(p);
+    id = "id_"+n;
+    button = $("<button id="+id+" class='btn btn-primary mb-3' onclick='add_one_raido_button()'>Add new Option</button>");
+    Great_div.append(button);
 
+
+    form.append(Great_div);
+    n++;
+
+}
+
+
+function add_with_check_buttons(){
+    var form = $("#quiz_form");
+    var Great_div = $("<div class='form-group'></div>");
+    var p = $("<p contenteditable='true'>Q)Click to change text</p>");
+
+    Great_div.append(p);
+    id = "id_"+n;
+    button = $("<button id="+id+" class='btn btn-primary mb-3' onclick='add_one_check_box(n)'>Add new Option</button>");
+    Great_div.append(button);
+
+
+    form.append(Great_div);
     n++;
 }
 
-function add_with_radio_buttons(question_n){
-    var form = $("form");
-    var Great_div = $("<div class='form-group'></div>");
-    var p = $("<p contenteditable='true'>Q)Click to change text</p>");
-    var divs = [];
+function add_one_check_box(){
+event.preventDefault();
+  e = window.event.target;
+  input = $("<input class='form-check-input' type='checkbox' name='question_"+e.id+"[]' >");
+  label  = $("<label contenteditable='true' class='form-check-label'> Default radio </label>");
+  div = $("<div class='form-check'></div>");
+  div.append(input);
+  div.append(label);
 
-    for(var i =0 ;i<question_n;i++){
-        input = $("<input class='form-check-input' value=val_"+(i+1)+" type='radio' name='question_"+n+"' >");
-        label  = $("<label contenteditable='true' class='form-check-label'> Default radio </label>");
-        div = $("<div class='form-check' ></div>");
-        div.append(input);
-        div.append(label);
-        divs.push(div);
 
-    }
+	divs = e.parentElement
+  divs.append(div[0]);
+}
 
-    Great_div.append(p);
-    for(var i=0;i<question_n;i++){
-        Great_div.append(divs[i]);
-    }
-    form.append(Great_div);
+function add_one_raido_button(){
+  event.preventDefault();
+  e = window.event.target;
+  input = $("<input class='form-check-input' type='radio' name='question_"+e.id+"' >");
+  label  = $("<label contenteditable='true' class='form-check-label'> Default radio </label>");
+  div = $("<div class='form-check' ></div>");
+  div.append(input);
+  div.append(label);
+
+
+  divs = e.parentElement
+  divs.append(div[0]);
 
 }
 
-
-function add_with_check_buttons(question_n){
-    var form = $("form");
-    var Great_div = $("<div class='form-group'></div>");
-    var p = $("<p contenteditable='true'>Q)Click to change text</p>");
-    var divs = [];
-
-    for(var i =0 ;i<question_n;i++){
-        input = $("<input class='form-check-input' value=val_"+(i+1)+" type='checkbox' name='question_"+n+"[]' >");
-        label  = $("<label contenteditable='true' class='form-check-label'> Default radio </label>");
-        div = $("<div class='form-check'></div>");
-        div.append(input);
-        div.append(label);
-        divs.push(div);
-    }
-
-    Great_div.append(p);
-    for(var i=0;i<question_n;i++){
-        Great_div.append(divs[i]);
-    }
-    form.append(Great_div);
-}
 
 function save(){
-    form = $("form")[0];
+    form = $("#quiz_form")[0];
     groups = form.getElementsByClassName('form-group');
     Questions = []
     for(var i=0;i<groups.length;i++){

@@ -42,7 +42,7 @@
 
 <!--  here courses begines -->
 <div class="container">
-	<h1 class="pt-5">All Courses</h1>
+	<h1 class="pt-5"><?=$data['category_name']?></h1>
 	<div class="row pb-5">
 
 		<?php foreach ($data['courses'] as $course) { ?>

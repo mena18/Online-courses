@@ -51,7 +51,7 @@
             <a href="<?=url("course/info/".$course->id)?>" >Course info</a>
         </li>
         <li>
-            <a href="<?=url("course/resourses/".$course->id)?>" >Course resourses</a>
+            <a href="<?=url("resourses/all/".$course->id)?>" >Course resourses</a>
         </li>
     </ul>
 

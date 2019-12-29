@@ -5,7 +5,15 @@ require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
 
 <div class="container">
 
-<h3 class="text-muted text-center pt-3 mb-3">Lessons</h3>
+  <div class="row">
+    <div class="col-10">
+      <h3 class="text-muted text-center pt-3 mb-3">Resourses</h3>
+    </div>
+    <div class="col-2">
+      <a class="mt-3 mb-3 btn btn-primary"  href="<?=url('lesson/create/'.$course->id)?>" >Create lesson</a>
+    </div>
+  </div>
+
 <table class="table table-dark table-hover text-center">
   <thead>
     <tr class="text-muted">

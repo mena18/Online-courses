@@ -40,6 +40,11 @@ class assignment_model extends DataBase {
     self::query($sql);
   }
 
+  public function grade($user_id,$mark,$comment){
+    $sql = "UPDATE user_assignment SET marks = '$mark' , comment= '$comment' WHERE user_id = '$user_id' AND assignment_id = '$this->id';";
+    self::query($sql);
+  }
+
 
 
 

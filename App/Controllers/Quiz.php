@@ -42,6 +42,7 @@ class  Quiz  extends Controller{
 			return ;
 		}
 
+
 		$num=1;
 		$grades = 0;
 		foreach ($Questions as $question) {
@@ -52,7 +53,7 @@ class  Quiz  extends Controller{
 		}
 		//echo $grades .'/'. count($Questions);
 		quiz_model::add_grade($grades,$quiz_id,$_SESSION['user']['id']);
-		return redirect("course/index");
+		return redirect("course/show/".$course_id);
 	}
 
 

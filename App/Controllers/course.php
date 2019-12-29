@@ -4,9 +4,18 @@ class course extends Controller{
 
   /*************************************** User section ***************************************/
 
-	public function index(){
-		$courses = course_model::where(["finished"=>2]);
-		$this->view("courses/index",["courses"=>$courses]);
+	public function index($cat = 0){
+		if($cat == 0){
+			$courses = course_model::where(["finished"=>2]);
+			$category_name = "All courses";
+			$this->view("courses/index",["courses"=>$courses,"category_name"=>$category_name]);
+		}else{
+			$category = category_model::get($cat);
+			$courses = course_model::where(["finished"=>2,"category_id"=>$cat]);
+			$this->view("courses/index",["courses"=>$courses,"category_name"=>$category->name]);
+		}
+
+
 	}
 
 	// shows details for non register users
@@ -107,11 +116,7 @@ class course extends Controller{
 
 	}
 
-	public function resourses($course_id){
-		$course = course_model::get($course_id);
-		$files = resourses_model::where(["course_id"=>$course_id]);
-		$this->view("course_dashboard/resourses",["course"=>$course,"files"=>$files]);
-	}
+
 
 
   /*************************************** instructor section ***************************************/

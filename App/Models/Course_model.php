@@ -96,6 +96,12 @@ class course_model extends DataBase {
 	}
 
 
+	public function resourses(){
+		$sql = "SELECT * FROM resourses WHERE course_id  = '$this->id';";
+		return self::query_fetch_all($sql,"resourses_model");
+	}
+
+
 
 
 

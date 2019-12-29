@@ -3,7 +3,7 @@ require_once(app_path("views/course_dashboard/header.php"));
 require_once(app_path("views/course_dashboard/sidebar.php"));
 $user = $data['user'];
 $user_progress = (int) ($user->course_progress($course->id)*100);
-$user_marks = $user->course_marks($course->id);
+$user_marks = $user->quizzes_marks($course->id) + $user->assignments_marks($course->id);
 $course_total_marks = $course->total_marks();
 
  ?>
