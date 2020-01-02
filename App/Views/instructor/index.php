@@ -16,8 +16,10 @@
   	   <h3><?= $course->name ?></h3>
   	    <p><?= $course->description ?></p>
         <a href="<?=url('course/edit/')?><?=$course->id?>"class="btn btn-primary" role="button">Edit course</a>
-  	    	<a href="<?=url('course/delete/')?><?= $course->id ?>" class="btn btn-danger" role="button">Delete </a>
-  	    </div>
+          <?php $path = url('course/delete/'.$course->id);?>
+          <button onclick="delete_swal('<?=$path?>')" class="btn btn-danger">Delete</button>
+          <!--<a href="url()"></a>  -->
+        </div>
   	 </div>
 
    <?php } ?>

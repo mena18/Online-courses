@@ -7,20 +7,13 @@ class course_model extends DataBase {
 	public static $fill = ['name','description','image',
 	'instructor_id','category_id','avg_rating','duration_weeks','finished'];
 
-	public $name = "name";
-	public $description = "description";
-	public $image = "image";
-	public $instructor_id = 7;
-	public $category_id = 1;
-	public $avg_rating = 3;
-	public $duration_weeks = 4;
-	public $Finished = 0;
+
 
 
 
 	public function rating(){
 		$id = $this->id;
-		$sql = "SELECT AVG(rating) FROM user_courses WHERE course_id = '$id'; ";
+		$sql = "SELECT AVG(rating) FROM user_courses WHERE course_id = '$id' AND finished='1'; ";
 		return self::get_one($sql)[0];
 
 	}
@@ -96,12 +89,22 @@ class course_model extends DataBase {
 	}
 
 
+	public function reviews($lim=-1){
+		$sql = "SELECT user_courses.*,user.* FROM user_courses inner join user on user.id = user_courses.user_id
+		 WHERE user_courses.course_id = '$this->id' AND rating != 0 ORDER BY rating LIMIT $lim ";
+		return self::query_fetch_all($sql,"user_model");
+	}
+
 	public function resourses(){
 		$sql = "SELECT * FROM resourses WHERE course_id  = '$this->id';";
 		return self::query_fetch_all($sql,"resourses_model");
 	}
 
-
+	public function users(){
+		$sql = "SELECT user_courses.*,user.* FROM user_courses INNER JOIN user 	ON user_courses.user_id = user.id
+				WHERE course_id = '$this->id' ";
+		return self::query_fetch_all($sql,"user_model");
+	}
 
 
 
@@ -120,8 +123,8 @@ class course_model extends DataBase {
 
 
 	/* remove soon */
-	public function user_finish($user_id,$course_id){
-		$sql = "UPDATE user_courses SET finished = '1' WHERE course_id='$course_id' AND user_id = '$user_id' ";
+	public function user_finish($user_id,$course_id,$rating,$review){
+		$sql = "UPDATE user_courses SET finished = '1',rating = '$rating' ,review = '$review'  WHERE course_id='$course_id' AND user_id = '$user_id' ";
 		self::query($sql);
 	}
 

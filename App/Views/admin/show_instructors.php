@@ -21,6 +21,8 @@
         <td><?= $instructor->password ?></td>
         <td>
           <a href="<?= url('admin/delete_instructor/'.$instructor->id) ?>" class="btn btn-danger">Delete</a>
+          <?php $path = url('admin/delete_instructor/'.$instructor->id) ;?>
+          <button onclick="delete_swal('<?=$path?>')" class="btn btn-danger">Delete</button>
         </td>
 
       </tr>

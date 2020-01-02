@@ -19,7 +19,8 @@
         <td><?= $user->name ?></td>
         <td><?= $user->email ?></td>
         <td>
-          <a href="<?= url('admin/delete_instructor/'.$user->id) ?>" class="btn btn-danger">Delete</a>
+          <?php $path = url('admin/delete_instructor/'.$user->id);?>
+          <button onclick="delete_swal('<?=$path?>')" class="btn btn-danger">Delete</button>
         </td>
 
       </tr>

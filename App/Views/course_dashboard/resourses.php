@@ -2,7 +2,7 @@
 require_once(app_path("views/course_dashboard/header.php"));
 require_once(app_path("views/course_dashboard/sidebar.php"));
 $counter=1;
-$files = $data['courses']->resourses();
+$files = $data['course']->resourses();
  ?>
 
 <div class="container">

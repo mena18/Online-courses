@@ -14,9 +14,18 @@ class course extends Controller{
 			$courses = course_model::where(["finished"=>2,"category_id"=>$cat]);
 			$this->view("courses/index",["courses"=>$courses,"category_name"=>$category->name]);
 		}
+}
 
-
+	public function search(){
+		$search_for = $_POST['search'];
+		$courses = course_model::search(["name"=>$search_for]);
+		$Head_message = "Search result for : ".$search_for;
+		$this->view("courses/index",["courses"=>$courses,"category_name"=>$Head_message]);
 	}
+
+
+
+
 
 	// shows details for non register users
 	public function details($id){
@@ -75,7 +84,9 @@ class course extends Controller{
 	public function user_finish($id){
 
 		if(!isset($_SESSION['user'])){redirect("user/loginview");}
-		course_model::user_finish($_SESSION['user']['id'],$id);
+		$rating = $_POST['rating'];
+		$review = $_POST['review'];
+		course_model::user_finish($_SESSION['user']['id'],$id,$rating,$review);
 		redirect("user/classroom");
 	}
 
@@ -139,11 +150,18 @@ class course extends Controller{
 		$course = new course_model();
 
 		$course->name=$_POST['name'];
-		$course->desc=$_POST['description'];
+		$course->description=$_POST['description'];
 		$course->duration_weeks=$_POST['weeks'];
 		$course->category_id=$_POST['category'];
-		$course->instructorid=$_SESSION['user']['id'];
+		$course->instructor_id=$_SESSION['user']['id'];
 		$course->image=$image;
+		$course->finished=0;
+		$course->avg_rating =0;
+
+
+		// print_array($course);
+		// print_array($_SESSION);
+		// exit();
 
 		$course->save();
 

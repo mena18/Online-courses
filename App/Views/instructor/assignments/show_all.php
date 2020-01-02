@@ -36,7 +36,8 @@ require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
       <td><?= $assignment->week_num ?></td>
       <td>
         <button class="btn btn-success" onclick="func()" type="button" id="<?=url('assignment/update/'.$assignment->id)?>" data-toggle="modal" data-target="#assignment" data-whatever="@mdo">Edit</button>
-        <a href="<?=url('assignment/delete/'.$assignment->id)?>" class="btn btn-danger">Delete</a>
+        <?php $path = url('assignment/delete/'.$assignment->id);?>
+        <button onclick="delete_swal('<?=$path?>')" class="btn btn-danger">Delete</button>
       </td>
       <td>
         <a href="<?=url('assignment/show_all_users/'.$assignment->id)?>" class="btn btn-primary mr-3">Show</a>
@@ -75,7 +76,7 @@ require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
                   <div class="form-group">
                     <label for="description" class="col-form-label">Description</label>
                     <textarea name="description" class="form-control"></textarea>
-                    
+
                   </div>
 
                   <div class="form-group">

@@ -37,15 +37,10 @@ $user = $data['user'];
           <iframe class="frame embed-responsive-item" src="" allowfullscreen></iframe>
         </div>
 
+        <?php $var = "Mark as Watched";$class_style = "btn-primary";
+        if($user->watched($lesson->id) == 1){$var = "Mark as Un Watched";$class_style="btn-secondary";}?>
 
-        <?php if($user->watched($lesson->id) == 1){?>
-
-         <a class="mt-5 btn btn-secondary"  href="<?=url('lesson/mark/')?><?=$lesson->id?>">Mark as Un Watched</a>
-
-       <?php }else { ?>
-
-         <a class="mt-5 btn btn-primary"  href="<?=url('lesson/mark/')?><?=$lesson->id?>">Mark as Watched</a>
-       <?php } ?>
+         <button onclick="send()" class="mt-5 btn <?=$class_style?>"  id="<?=url('lesson/mark/')?><?=$lesson->id?>"><?=$var?></button>
 
 
       </div>
@@ -61,6 +56,28 @@ $user = $data['user'];
 
 <script>
 
+function send(){
+  e =window.event.target;
+
+  fetch(e.id) // Call the fetch function passing the url of the API as a parameter
+  .then((res)=>res.json())
+  .then(function(data) {
+      // Your code for handling the data you get from the API
+      if(e.innerText == "Mark as Un Watched"){
+        e.innerText = "Mark as Watched"
+      }else{
+        e.innerText = "Mark as Un Watched";
+      }
+      e.classList.toggle("btn-secondary");
+      e.classList.toggle("btn-primary");
+  })
+  .catch(function(error) {
+    // This is where you run code if the server returns any errors
+    console.log(error);
+  });
+
+
+}
 
 var cur = <?=$data['lesson_num']-1?>,tabcontent,tablinks;
 var links = [

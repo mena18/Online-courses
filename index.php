@@ -15,8 +15,12 @@ function url($st){
 function app_path($st){
 	return "App/" . $st;
 }
-function redirect($path){
-	header("Location: http://localhost/courses/".$path);
+function redirect($path,$key=-1,$value=-1){
+	if($key==-1){
+		header("Location: http://localhost/courses/".$path);
+	}else{
+		header("Location: http://localhost/courses/".$path."/".$key."/".$value);
+	}
 	exit();
 }
 

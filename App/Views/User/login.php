@@ -24,7 +24,7 @@
       	</div>
 
 
-		 <button type="submit" class="btn btn-primary">Submit</button>
+		 <button id='sub_form' type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 

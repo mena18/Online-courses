@@ -12,14 +12,17 @@ class  Quiz  extends Controller{
 
 		$quiz = quiz_model::get($quiz_id);
 		$Questions = quiz_model::get_questions($quiz->id);
+		$user = user_model::get($_SESSION['user']['id']);
 
 
 
 		$course_id = $quiz->course_id;
 		$course = course_model::get($course_id);
 		if(!course_model::user_course($_SESSION['user']['id'],$course_id)){
-			echo "you don't take the course";
-			return ;
+			redirect('courses/index','error',"you don't take the course");
+		}
+		if($user->user_course_finished($course_id)){
+			redirect('course/show/'.$course_id,'error',"you finished the course");
 		}
 
 		//print_array($Questions);

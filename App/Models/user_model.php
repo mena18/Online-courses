@@ -13,7 +13,7 @@ class user_model extends DataBase{
 	public $email;
 	public $password;
 	public $type;
-	public $image="NULL";
+	public $image="uploads/default.jpg";
 	public $description="Description";
 	public $bio="Bio";
 	public $facebook="facebook";
@@ -58,6 +58,17 @@ class user_model extends DataBase{
 		return self::query_fetch_all($sql,'course_model');
 	}
 
+	public function user_course($course_id){
+		$sql = "SELECT user_courses.*,courses.* FROM user_courses INNER JOIN courses 	ON user_courses.course_id = courses.id
+				INNER JOIN user ON user_courses.user_id = user.id WHERE user_courses.user_id = '$this->id' AND user_courses.course_id = '$course_id' ";
+				return self::query_fetch_all($sql,'course_model');
+	}
+
+	public function user_course_finished($course_id){
+		$sql = "SELECT user_courses.finished FROM user_courses WHERE user_id='$this->id' AND course_id = '$course_id'; ";
+				return self::get_one($sql)[0];
+	}
+
 	public function course_progress($course_id){
 		$user_id = $this->id;
 		$sql_1 = self::get_array("SELECT id FROM lesson  where course_id = '$course_id' ");
@@ -84,6 +95,10 @@ class user_model extends DataBase{
 		$sql_2 = "SELECT SUM(marks) FROM user_quiz where user_id = '$user_id' AND quiz_id in $in; ";
 		return self::get_one($sql_2)[0];
 
+	}
+
+	public function course_marks($course_id){
+		return $this->assignments_marks($course_id) + $this->quizzes_marks($course_id);
 	}
 
 	public function assignments_marks($course_id){

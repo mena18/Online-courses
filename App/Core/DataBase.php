@@ -64,6 +64,18 @@ class DataBase{
 		return self::query_fetch_all($sql);
 	}
 
+	public static function search($arr){
+		$wh = [];
+		foreach ($arr as $key => $value) {
+			$wh[] = "$key LIKE '%$value%' ";
+		}
+		$wh = implode(" OR ",$wh);
+		$tb_name = static::$table_name;
+		$sql = "SELECT * FROM $tb_name WHERE $wh ;";
+		return self::query_fetch_all($sql);
+	}
+
+
 	public static function count(){
 		$tb_name = static::$table_name;
 		$var = self::get_one("SELECT count(id) FROM $tb_name;");
@@ -83,7 +95,6 @@ class DataBase{
 		$tb_name = static::$table_name;
 		$sql = "INSERT INTO $tb_name" . $data . " VALUES " . $values ;
 
-		echo $sql;
 		self::query($sql);
 	}
 

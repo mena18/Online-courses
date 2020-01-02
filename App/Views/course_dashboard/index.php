@@ -2,6 +2,7 @@
 require_once(app_path("views/course_dashboard/header.php"));
 require_once(app_path("views/course_dashboard/sidebar.php"));
 $user = $data['user'];
+
 $user_progress = (int) ($user->course_progress($course->id)*100);
 $user_marks = $user->quizzes_marks($course->id) + $user->assignments_marks($course->id);
 $course_total_marks = $course->total_marks();
@@ -116,16 +117,81 @@ $course_total_marks = $course->total_marks();
 
        <?php }
 
-       $finished = $user->course_progress($data['course']->id);
-       if($finished==1){ ?>
-           <a href="<?=url('course/user_finish/'.$data['course']->id)?>" class="btn btn-primary mt-5 mb-5">Finish course</a>
+
+       if($user_progress==100 && $user->user_course_finished($course->id) == 0 && ( ($user_marks/$course_total_marks)>=(3/4)) ){ ?>
+           <button class="mt-3 mb-3 btn btn-primary" onclick="func()" type="button" id="<?=url('course/user_finish/'.$course->id)?>" data-toggle="modal" data-target="#assignment" data-whatever="@mdo">Finish course</button>
        <?php } ?>
 
      <!-- End of for loop -->
+
+
+
+<!-- Modal -->
+
+
+
+<div class="modal fade" id="assignment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id='form_edit' action="<?=url('course/user_finish/'.$course->id)?>" method="POST">
+
+                  <div class="form-group">
+                    <label for="dead_line" class="col-form-label">Rating</label>
+                    <input name='rating' type="number" min=1 max=5 class="form-control" id="dead_line" >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="total_marks" class="col-form-label">review</label>
+                    <input name='review' type="text" class="form-control" id="total_marks" >
+                  </div>
+
+
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Finish</button>
+                  </div>
+
+
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- End Modal -->
+
+
+
+
+
 
      </div>
    </div>
  </div>
 
 
-<?php require_once(app_path("views/course_dashboard/footer.php"));
+<?php require_once(app_path("views/course_dashboard/footer.php")); ?>
+
+
+
+<script type="text/javascript">
+    function func(){
+      e = window.event.target;
+      $('#form_edit').attr('action', e.id);
+    }
+</script>

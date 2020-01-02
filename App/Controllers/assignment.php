@@ -63,7 +63,7 @@ class assignment extends Controller{
     $assignment = assignment_model::get($assignment_id);
     $assignment->delete();
 
-    redirect("user/classrooom");
+    redirect("assignment/show_all/".$course_id);
   }
 
   public function show_all($course_id){

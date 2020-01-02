@@ -29,7 +29,8 @@
           <?php } ?>
         </td>
         <td>
-          <a href="<?=url('admin/delete_course/'.$course->id)?>" class="btn btn-danger">Delete</a>
+          <?php $path = url('admin/delete_course/'.$course->id) ;?>
+          <button onclick="delete_swal('<?=$path?>')" class="btn btn-danger">Delete</button>
         </td>
 
       </tr>

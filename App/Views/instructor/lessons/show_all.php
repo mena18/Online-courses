@@ -7,7 +7,7 @@ require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
 
   <div class="row">
     <div class="col-10">
-      <h3 class="text-muted text-center pt-3 mb-3">Resourses</h3>
+      <h3 class="text-muted text-center pt-3 mb-3">Lessons</h3>
     </div>
     <div class="col-2">
       <a class="mt-3 mb-3 btn btn-primary"  href="<?=url('lesson/create/'.$course->id)?>" >Create lesson</a>
@@ -34,7 +34,8 @@ require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
       <td><?= $lesson->week_number ?></td>
       <td>
         <a href="<?=url('lesson/edit/'.$lesson->id)?>" class="btn btn-success mr-3">Edit</a>
-        <a href="<?=url('lesson/delete/'.$lesson->id)?>" class="btn btn-danger">Delete</a>
+        <?php $path = url('lesson/delete/'.$lesson->id) ;?>
+        <button onclick="delete_swal('<?=$path?>')" class="btn btn-danger">Delete</button>
       </td>
       <td>
         <a href="<?=url('lesson/show_all_users/'.$lesson->id)?>" class="btn btn-primary mr-3">Show</a>

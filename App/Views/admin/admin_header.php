@@ -8,7 +8,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="<?=public_path('css/admin_style.css')?>">
-    
+
     <title>Admin Dashboard</title>
   </head>
   <body>
@@ -30,7 +30,6 @@
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item"><a href="<?= url('admin/index') ?>" class="nav-link text-white p-3 mb-2 current"><i class="fas fa-home text-light fa-lg mr-3"></i>Dashboard</a></li>
-                <li class="nav-item"><a href="#" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-envelope text-light fa-lg mr-3"></i>Inbox</a></li>
                 <li class="nav-item"><a href="<?=url('admin/all_courses')?>" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-table text-light fa-lg mr-3"></i>Courses</a></li>
                 <li class="nav-item"><a href="<?=url('admin/all_users')?>" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-table text-light fa-lg mr-3"></i>Users</a></li>
                 <li class="nav-item"><a href="<?=url('admin/all_categories')?>" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-table text-light fa-lg mr-3"></i>Categories</a></li>
@@ -82,7 +81,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-success" data-dismiss="modal">Stay Here</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Logout</button>
+            <a href="<?=url('user/logout')?>" type="button" class="btn btn-danger" >Logout</a>
           </div>
         </div>
       </div>

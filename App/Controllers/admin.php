@@ -58,12 +58,10 @@ class admin extends Controller{
     $ins->name = $_POST['name'];
     $ins->email = $_POST['email'];
     $ins->type = 1;
-    $ins->password = generate_random_password(15);
+    $ins->password = password_hash($_POST['password'], PASSWORD_DEFAULT);//generate_random_password(15);
     $ins->save();
 
-    $instructor = user_model::where(["email"=>($ins->email)]);
-    $instructor = $instructor[0];
-    print_array($instructor);
+    redirect('admin/index','success',"instructor created successfuly");
   }
 
   public function delete_instructor($instructor_id){
@@ -90,7 +88,7 @@ class admin extends Controller{
 
   public function delete_course($course_id){
     if(!isset($_SESSION['user']) || $_SESSION['user']['type']!=2 ){echo "You aren't admin";return ;}
-    $course = course_model::delete($course_id);
+    $course = course_model::get($course_id);
     $course->delete();
     redirect("admin/all_courses");
   }
@@ -106,7 +104,7 @@ class admin extends Controller{
     $category = new category_model();
     $category->name = $_POST['name'];
     $category->save();
-    redirect("admin/all_categories");
+    redirect('admin/all_categories','success',"cateogry created successfuly");
 
   }
 

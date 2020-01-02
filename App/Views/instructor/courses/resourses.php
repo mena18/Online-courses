@@ -36,7 +36,8 @@ require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
         <td><a href="<?=$file->path?>" download><span style="font-size:25px;" class="fa fa-download"></span></a></td>
         <td>
           <button id="<?=url('resourses/update/'.$file->id)?>" onclick='func()' type="button" class="btn btn-primary" data-toggle="modal" data-target="#resourses" data-whatever="@mdo">Edit resourses</button>
-          <a href="<?=url('resourses/delete/'.$file->id)?>" class="btn btn-danger">Delete</a>
+          <?php $path = url('resourses/delete/'.$file->id) ;?>
+          <button onclick="delete_swal('<?=$path?>')" class="btn btn-danger">Delete</button>
         </td>
       </tr>
     </tr>

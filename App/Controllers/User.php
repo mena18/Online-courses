@@ -29,7 +29,7 @@ class User extends Controller{
 	public function login(){
 				$user = user_model::where(["email"=>$_POST['email']]);
 				$vert =  password_verify($_POST['password'],$user[0]->password);
-				if(!$vert){redirect("user/loginview");}
+				if(!$vert){redirect("user/loginview",'error','email or password is wrong');}
 				$_SESSION['user'] = (array)$user[0];
 
 				if($user->type==2){redirect("admin/index");}
@@ -43,6 +43,8 @@ class User extends Controller{
 	}
 
 	public function classroom(){
+		// print_array($_SESSION);
+		// exit();
 		if(!isset($_SESSION['user'])){redirect("user/loginview");}
 		if($_SESSION['user']['type']==2){redirect("admin/index");}
 

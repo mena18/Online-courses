@@ -10,7 +10,7 @@
         <div class="col-xl-2 col-lg-3 col-md-4 sidebar fixed-top">
           <a href="<?= url('course/index'); ?>" class="navbar-brand text-white d-block mx-auto text-center py-3 mb-4 bottom-border">Online Courses</a>
           <div class="bottom-border pb-3">
-            
+
             <img src="<?=public_path($_SESSION['user']['image'])?>" width="50" class="rounded-circle mr-3">
             <span class="text-white"><?= $_SESSION['user']['name'] ?></span>
           </div>
@@ -75,7 +75,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" data-dismiss="modal">Stay Here</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Logout</button>
+        <a href="<?=url('user/logout')?>" type="button" class="btn btn-danger" >Logout</a>
       </div>
     </div>
   </div>

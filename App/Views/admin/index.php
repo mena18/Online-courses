@@ -113,7 +113,8 @@
           <form action="<?=url('admin/store_instructor')?>" method="POST">
             <div class="form-group">
               <input type="text" required name='name' class="form-control py-2 mb-3" placeholder="name">
-              <input type="email" required name='email' class="form-control py-2 mb-3" placeholder="Email name">
+              <input type="email" required name='email' class="form-control py-2 mb-3" placeholder="Email ">
+              <input type="password" required name='password' class="form-control py-2 mb-3" placeholder="password">
               <button type="submit" class="btn btn-block text-uppercase font-weight-bold text-light bg-info py-2 mb-5">Submit Post</button>
             </div>
           </form>
