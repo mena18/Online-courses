@@ -16,25 +16,26 @@ if(isset($_SESSION['user'])){
 		color:#336699;
 	}
 	.para1{
-		margin-left: 35%;
-		max-width: 30%;
+		text-align: center;
+		width:700px;
+		margin: auto;
+		
 	}
 	.para2{
 		color:#817e7e;
 		font-size: medium;
+		text-align: center;
 		text-transform: uppercase;
 	}
 	.para3{
 		text-align: center;
 		color:blue;
 	}
-	#but{
-		margin-left: 45%;/* 40*/
-	}
+
 	.lessons{
 		background-color: white;
-		width: 40%;
-		margin-left: 35%;
+		width: 50%;
+		margin:auto;
 	}
 	button p{
 		color: white;
@@ -61,18 +62,19 @@ if(isset($_SESSION['user'])){
 		text-transform: uppercase;
 	}
 	.teacher{
-		margin-left: 30%;
-		max-width: 40%;
+		width: 50%;
+		margin:auto;
+		text-align: center;
 	}
 	.teacherpara{
 		font-family: fantasy;
 		font-size: 40px;
-		margin-left:38%;/* text align center*/
+		text-align: center;
 		color:#336699;
 	}
 	img{
 		border-radius: 50%;
-		margin-left:44%;
+		text-align: center;
 	}
 	.name{
 		font-family:Serif;
@@ -81,11 +83,10 @@ if(isset($_SESSION['user'])){
 		color:#336699;
 		line-height: 1.8;
 		text-transform: capitalize;
-		margin-left:30%;
 	}
-	.discription{
-		max-width: 60%;
-		margin-left:40%;
+	.description{
+		text-align: center;
+		
 	}
 	.people{
 		margin-left: 25%;
@@ -109,23 +110,16 @@ if(isset($_SESSION['user'])){
 		float:none;
 	}
 	.ved{
-		min-width: 10px;
-		margin-left:30%;
+		text-align: center;
 	}
-	.ved p{
-		margin-left:20%;
-	}
+	
 	iframe{
 		border:2px solid black ;
 	}
+
 	.enroll{
-		margin-left:30%;
-		min-width: 10px;
-	}
-	.enroll p{
 		font-family: fantasy;
 		font-size: 40px;
-		margin-left:25%;/* text align center*/
 		color:#336699;
 	}
 	#lastbut{
@@ -136,14 +130,17 @@ if(isset($_SESSION['user'])){
 
 <body>
 <div class="partone">
+	
+	<!--  heading   -->
 	<p class="para">LEARN <?=$course->name?> FOR FREE</p>
-	<!--  First one -->
 	<div class="para1">
 		<p class="para2"><?=$course->description?></p>
 		<br>
 		<p class=" para3 "><?=count($course->lessons())?> lessons | <?=(int)($course->total_time()/60)?> minutes</p>
-	</div>
-	<!--  Second one -->
+	
+
+
+		<!--  Second one -->
 	<br>
 		<?php if(isset($_SESSION['user'])){?>
 
@@ -161,6 +158,12 @@ if(isset($_SESSION['user'])){
 		<?php } ?>
 	<?php } ?>
 
+
+	</div>
+
+
+
+
 	<!-- Modal -->
 
 
@@ -170,36 +173,39 @@ if(isset($_SESSION['user'])){
 		<br>
 		<br>
 </div>
+
+
+
 <br>
 
 <div class="lessons" id="accordion">
-		<?php foreach ($course->weeks() as $week_name => $week): ?>
+	<?php foreach ($course->weeks() as $week_name => $week): ?>
 
 
-			<div class="card">
-				<div class="card-header" id="headingOne">
-					<h5 class="mb-0">
-						<button id="col1"  class="btn btn-link" data-toggle="collapse" data-target="#week_<?=$week_name?>" aria-expanded="false" aria-controls="collapseOne">
-							<p>Week <?= $week_name ?></p>
-						</button>
-					</h5>
-				</div>
-
-				<div id="week_<?=$week_name?>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-
-						<?php foreach ($week as $ob): ?>
-							<?php if($ob['type']=='lesson'){ $lesson = $ob['content']; ?>
-									<div class="card-body">
-										<a href="#"><span class="fa fa-youtube-play"></span> <span class="black hover_red"><?=$lesson->name?></span></a>
-										<span class="float-right"><?=gmdate("i:s", $lesson->duration)?></span>
-									</div>
-								<?php } ?>
-						<?php endforeach; ?>
-
-				</div>
+		<div class="card">
+			<div class="card-header" id="headingOne">
+				<h5 class="mb-0">
+					<button id="col1"  class="btn btn-link" data-toggle="collapse" data-target="#week_<?=$week_name?>" aria-expanded="false" aria-controls="collapseOne">
+						<p>Week <?= $week_name ?></p>
+					</button>
+				</h5>
 			</div>
 
-		<?php endforeach; ?>
+			<div id="week_<?=$week_name?>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+
+					<?php foreach ($week as $ob): ?>
+						<?php if($ob['type']=='lesson'){ $lesson = $ob['content']; ?>
+								<div class="card-body">
+									<a href="#"><span class="fa fa-youtube-play"></span> <span class="black hover_red"><?=$lesson->name?></span></a>
+									<span class="float-right"><?=gmdate("i:s", $lesson->duration)?></span>
+								</div>
+							<?php } ?>
+					<?php endforeach; ?>
+
+			</div>
+		</div>
+
+	<?php endforeach; ?>
 </div>
 
 <br>
@@ -233,48 +239,45 @@ if(isset($_SESSION['user'])){
 	<br>
 	<p class="name"><?=$instructor->name?></p>
 	<br>
-	<div class="discription">
+	<div class="description">
 	<p><?=$instructor->description?></p>
 	</div>
 </div>
 
 <br><br><br><br>
 <!-- People love this course -->
-<div class=" people ">
+<!-- <div class=" people ">
 	<p class="teacherpara">PEOPLE LOVE THIS COURSE </p>
 	<p class="name">And we think you will love it.....</p>
 </div>
-<br><br><br>
+<br><br><br> -->
 <!-- End people will love this course -->
 
-<div class="opinion">
+<!-- <div class="opinion">
 
 
-	<?php foreach ($course->reviews(3) as $us): ?>
+	<?php // foreach ($course->reviews(3) as $us): ?>
 
 		<div class="card" style="width: 18rem;" id="c">
 				<div class="card-body">
 				  <h5 class="card-title">
-					<img  class=" imgcard " src="<?=$us->image?>" alt="user picture" width=50 height=50>
+					<img  class=" imgcard " src="<? $us->image?>" alt="user picture" width=50 height=50>
 				  </h5>
 				  <h6 class="card-subtitle mb-2 text-muted">
-						<p id="username"><?=$us->name?></p>
+						<p id="username"><? $us->name?></p>
 				  </h6>
-				  <p class="card-text"><?=$us->review?></p>
+				  <p class="card-text"><? $us->review?></p>
 					<hr>
 					<div class="text-center">
-						<?php for ($i=1; $i <=5 ; $i++) { ?>
-							<span class="fa fa-star <?php if($us->rating >= $i){echo 'checked';} ?>"></span>
-						<?php } ?>
+						<?php // for ($i=1; $i <=5 ; $i++) { ?>
+							<span class="fa fa-star <?php // if($us->rating >= $i){echo 'checked';} ?>"></span>
+						<?php // } ?>
 					</div>
-						<!--
-				  <a href="#" class="card-link"><i class="fa fa-heart"></i></a>
-				  <a href="#" class="card-link">9:30 PM - April 2 , 2018</a>
-					  -->
+						
 				</div>
 			</div>
 
-	<?php endforeach; ?>
+	<?php  // endforeach; ?>
 
 
 			<div id='f' style="width:700px;height:200px;">
@@ -282,34 +285,33 @@ if(isset($_SESSION['user'])){
 			</div>
 
 
-</div>
+</div> -->
 
-<br><br><br><br><br>
+
 
 <div class="ved">
-	<p class="teacherpara">An introductory vedio </p>
-	<br><br><br>
+	<p class="teacherpara mb-5">An introductory vedio </p>
 	<iframe src="https://www.youtube.com/embed/<?=$course->lessons()[0]->video_id?>" height="500" width="900" >
 		<video width="320" height="240" autoplay>
 			<source src="movie.mp4" type="video/mp4">
 			<source src="movie.ogg" type="video/ogg">
 			Your browser does not support the video tag.
 		</video>
-</iframe>
-</div>
-<br><br>
-
-
+	</iframe>
 
 <?php if(isset($_SESSION['user']) && !$user->user_course($course->id)){ ?>
-		<div class="enroll">
-			<p >Enroll in the course now ..... </p>
-			<br>
-	<a id="but" type="button" class="btn btn-primary mb-5" href="<?=url('course/register/'.$course->id)?>">
-		Enroll for free
-	</a>
-	</div>
+	
+		<p class="enroll">Enroll in the course now ..... </p>
+		<br>
+		<a id="but" type="button" class="btn btn-primary mb-5" href="<?=url('course/register/'.$course->id)?>">
+			Enroll for free
+		</a>
+	
 <?php } ?>
+
+
+</div>
+
 
 
 

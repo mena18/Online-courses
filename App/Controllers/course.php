@@ -14,7 +14,7 @@ class course extends Controller{
 			$courses = course_model::where(["finished"=>2,"category_id"=>$cat]);
 			$this->view("courses/index",["courses"=>$courses,"category_name"=>$category->name]);
 		}
-}
+	}
 
 	public function search(){
 		$search_for = $_POST['search'];

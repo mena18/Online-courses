@@ -18,6 +18,11 @@
         <a href="<?=url('course/edit/')?><?=$course->id?>"class="btn btn-primary" role="button">Edit course</a>
           <?php $path = url('course/delete/'.$course->id);?>
           <button onclick="delete_swal('<?=$path?>')" class="btn btn-danger">Delete</button>
+          <?php if($course->finished==0){ ?>
+            <a href="<?=url('course/instructor_finish/')?>/<?=$course->id?>" class="btn btn-primary">finish</a>
+          <?php }else { ?>
+            <a  href="<?=url('course/instructor_un_finish/')?>/<?=$course->id?>" class="btn btn-primary">Un finish</a>
+          <?php } ?>
           <!--<a href="url()"></a>  -->
         </div>
   	 </div>

@@ -21,7 +21,7 @@ require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
       <th>Name</th>
       <th>Description</th>
       <th>Week</th>
-      <th>Options</th>
+      <th colspan="2">Options</th>
       <th>User Finished</th>
     </tr>
   </thead>
@@ -34,6 +34,8 @@ require_once(app_path("views/instructor/instructor_sidebar.php")); ?>
       <td><?= $lesson->week_number ?></td>
       <td>
         <a href="<?=url('lesson/edit/'.$lesson->id)?>" class="btn btn-success mr-3">Edit</a>
+      </td>
+      <td>
         <?php $path = url('lesson/delete/'.$lesson->id) ;?>
         <button onclick="delete_swal('<?=$path?>')" class="btn btn-danger">Delete</button>
       </td>
